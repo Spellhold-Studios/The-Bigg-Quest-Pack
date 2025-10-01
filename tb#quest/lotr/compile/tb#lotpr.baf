@@ -1,0 +1,185 @@
+IF
+  True()
+THEN
+    RESPONSE #100
+             CutSceneId("tb#lotrc")
+//Amnish reinforcements
+    	     CreateCreature("tb#lotrw",[1056.928],6) //Cowled Enforcer
+    	     CreateCreature("tb#lotrw",[1248.736],6)
+    	     CreateCreature("tb#lotrl",[992.864],6) //Amnish Legionair
+    	     CreateCreature("tb#lotrl",[992.928],6)
+    	     CreateCreature("tb#lotrl",[1120.800],6)
+    	     CreateCreature("tb#lotrl",[1184.672],6)
+    	     CreateCreature("tb#lotrl",[1284.672],6)
+
+// The general party, a good deal of mages
+    	     CreateCreature("tb#lotrs",[32.32],14) //9 level Orc Shaman
+    	     CreateCreature("tb#lotrm",[32.96],14) //8 level Orc Transmuter (Teleport Field, anybody?)
+    	     CreateCreature("tb#lotgc",[32.160],14) //23 level Orc Cleric (Uses Refinements HLA)
+    	     CreateCreature("tb#lotra",[32.224],14) //6 level Orc Archer
+    	     CreateCreature("tb#lotro",[32.320],14) //4 level Orc Warrior
+             CreateCreature("tb#lotrm",[96.32],14)
+    	     CreateCreature("tb#lotrs",[96.96],14)
+    	     CreateCreature("tb#lotga",[96.160],14) //13 level Orc Archer
+    	     CreateCreature("tb#lotgw",[96.224],14) //13 level Ogre Warrior
+    	     CreateCreature("tb#lotgm",[160.32],14) //19 level Orc Wild Mage
+    	     CreateCreature("tb#lotga",[160.96],14)
+    	     CreateCreature("tb#lotg",[160.160],14)  //25 level Orog Berzerker: the general
+    	     CreateCreature("tb#lotra",[224.32],14)
+    	     CreateCreature("tb#lotgw",[224.96],14)
+    	     CreateCreature("tb#lotro",[288.32],14)
+
+//an absurd number of low-level guys
+    	     CreateCreature("tb#lotro",[32.608],14)
+    	     CreateCreature("tb#lotro",[32.672],14)
+    	     CreateCreature("tb#lotrm",[32.736],14)
+    	     CreateCreature("tb#lotra",[32.800],14)
+    	     CreateCreature("tb#lotra",[32.864],14)
+    	     CreateCreature("tb#lotra",[32.928],14)
+    	     CreateCreature("tb#lotro",[96.608],14)
+    	     CreateCreature("tb#lotro",[96.672],14)
+    	     CreateCreature("tb#lotra",[96.736],14)
+    	     CreateCreature("tb#lotra",[96.800],14)
+    	     CreateCreature("tb#lotra",[96.864],14)
+    	     CreateCreature("tb#lotra",[96.928],14)
+    	     CreateCreature("tb#lotro",[160.608],14)
+    	     CreateCreature("tb#lotro",[160.672],14)
+    	     CreateCreature("tb#lotra",[160.736],14)
+    	     CreateCreature("tb#lotra",[160.800],14)
+    	     CreateCreature("tb#lotra",[160.864],14)
+    	     CreateCreature("tb#lotrs",[160.928],14)
+    	     CreateCreature("tb#lotro",[224.608],14)
+    	     CreateCreature("tb#lotro",[224.672],14)
+    	     CreateCreature("tb#lotro",[224.736],14)
+    	     CreateCreature("tb#lotro",[224.800],14)
+    	     CreateCreature("tb#lotro",[224.864],14)
+    	     CreateCreature("tb#lotro",[224.928],14)
+    	     CreateCreature("tb#lotro",[288.608],14)
+    	     CreateCreature("tb#lotgw",[288.672],14)
+    	     CreateCreature("tb#lotro",[288.736],14)
+    	     CreateCreature("tb#lotgw",[288.800],14)
+    	     CreateCreature("tb#lotro",[288.864],14)
+    	     CreateCreature("tb#lotro",[288.928],14)
+
+// a small "patrol"
+    	     CreateCreature("tb#lotra",[352.416],14)
+    	     CreateCreature("tb#lotra",[352.480],14)
+    	     CreateCreature("tb#lotrm",[416.352],14)
+    	     CreateCreature("tb#lotrs",[416.416],14)
+    	     CreateCreature("tb#lotro",[416.480],14)
+    	     CreateCreature("tb#lotro",[480.352],14)
+    	     CreateCreature("tb#lotro",[480.416],14)
+
+// another "patrol"
+    	     CreateCreature("tb#lotrs",[416.736],14)
+    	     CreateCreature("tb#lotrm",[416.800],14)
+    	     CreateCreature("tb#lotro",[416.864],14)
+    	     CreateCreature("tb#lotro",[480.672],14)
+    	     CreateCreature("tb#lotra",[480.736],14)
+    	     CreateCreature("tb#lotra",[480.800],14)
+    	     CreateCreature("tb#lotro",[480.864],14)
+    	     CreateCreature("tb#lotro",[544.736],14)
+    	     CreateCreature("tb#lotgw",[544.800],14)
+
+// a somewhat large group of mid - level officers
+    	     CreateCreature("tb#lotga",[416.160],14)
+    	     CreateCreature("tb#lotga",[480.96],14)
+    	     CreateCreature("tb#lotga",[480.160],14)
+    	     CreateCreature("tb#lotgw",[480.224],14)
+    	     CreateCreature("tb#lotga",[544.96],14)
+    	     CreateCreature("tb#lotga",[544.160],14)
+    	     CreateCreature("tb#lotgw",[544.224],14)
+    	     CreateCreature("tb#lotgw",[608.160],14)
+
+//a mage-heavy patrol
+    	     CreateCreature("tb#lotrm",[672.224],14)
+    	     CreateCreature("tb#lotrm",[672.288],14)
+    	     CreateCreature("tb#lotro",[672.352],14)
+    	     CreateCreature("tb#lotrm",[736.224],14)
+    	     CreateCreature("tb#lotrm",[736.288],14)
+    	     CreateCreature("tb#lotro",[736.352],14)
+    	     CreateCreature("tb#lotro",[800.224],14)
+    	     CreateCreature("tb#lotro",[800.288],14)
+    	     CreateCreature("tb#lotgw",[800.352],14)
+
+// a small patrol
+    	     CreateCreature("tb#lotga",[736.608],14)
+    	     CreateCreature("tb#lotro",[672.672],14)
+    	     CreateCreature("tb#lotro",[800.544],14)
+    	     CreateCreature("tb#lotro",[800.608],14)
+    	     CreateCreature("tb#lotro",[736.672],14)
+
+// another mid level officier group... but with magic support.
+    	     CreateCreature("tb#lotga",[1056.32],14)
+    	     CreateCreature("tb#lotgw",[1056.96],14)
+    	     CreateCreature("tb#lotga",[1120.32],14)
+    	     CreateCreature("tb#lotgw",[1120.96],14)
+    	     CreateCreature("tb#lotrs",[1184.32],14)
+    	     CreateCreature("tb#lotgw",[1184.96],14)
+    	     CreateCreature("tb#lotrm",[1248.32],14)
+    	     CreateCreature("tb#lotgw",[1248.96],14)
+
+// another small patrol... the big surprise is coming, boys!
+    	     CreateCreature("tb#lotra",[1056.288],14)
+    	     CreateCreature("tb#lotro",[1056.352],14)
+    	     CreateCreature("tb#lotra",[1120.224],14)
+    	     CreateCreature("tb#lotro",[1120.288],14)
+    	     CreateCreature("tb#lotro",[1184.288],14)
+
+    // the inital battle! Start shuddering...
+    //even if here you have the help of some Amnish Soldiers
+    	     CreateCreature("tb#lotra",[736.928],14)
+    	     CreateCreature("tb#lotra",[800.864],14)
+    	     CreateCreature("tb#lotra",[800.928],14)
+    	     CreateCreature("tb#lotrs",[864.800],14)
+    	     CreateCreature("tb#lotra",[864.864],14)
+    	     CreateCreature("tb#lotra",[864.928],14)
+    	     CreateCreature("tb#lotrm",[928.672],14)
+    	     CreateCreature("tb#lotro",[928.736],14)
+    	     CreateCreature("tb#lotro",[928.800],14)
+    	     CreateCreature("tb#lotro",[928.864],14)
+    	     CreateCreature("tb#lotro",[928.928],14)
+    	     CreateCreature("tb#lotr2",[992.608],14) //12/12 Orc Cleric Mage
+    	     CreateCreature("tb#lotra",[992.672],14)
+    	     CreateCreature("tb#lotro",[992.736],14)
+    	     CreateCreature("tb#lotro",[992.800],14)
+    	     CreateCreature("tb#lotrm",[1056.544],14)
+    	     CreateCreature("tb#lotga",[1056.608],14)
+    	     CreateCreature("tb#lotro",[1056.672],14)
+    	     CreateCreature("tb#lotr1",[1056.736],14) //20 Level Half-Ogre Barbarian, the second-in-command
+    	     CreateCreature("tb#lotro",[1056.800],14)
+    	     CreateCreature("tb#lotrs",[1120.544],14)
+    	     CreateCreature("tb#lotro",[1120.608],14)
+    	     CreateCreature("tb#lotro",[1120.672],14)
+    	     CreateCreature("tb#lotra",[1184.480],14)
+    	     CreateCreature("tb#lotro",[1184.544],14)
+    	     CreateCreature("tb#lotro",[1184.608],14)
+    	     CreateCreature("tb#lotra",[1248.416],14)
+    	     CreateCreature("tb#lotra",[1248.480],14)
+    	     CreateCreature("tb#lotro",[1248.544],14)
+    	     CreateCreature("tb#lotro",[1248.608],14)
+      	     ActionOverride("tb#lotrc",Face(14))
+      	     ActionOverride("tb#lotrc",DisplayStringHead("tb#lotrc",@21))
+	     Wait(3)
+	     ActionOverride("tb#lotrc",DisplayStringHead("tb#lotrc",@22))
+	     Wait(3)
+    	     ActionOverride(Player1,DisplayStringHead(Player1,@23))
+    	     ActionOverride(Player2,DisplayStringHead(Player2,@24))
+    	     ActionOverride(Player3,DisplayStringHead(Player3,@25))
+    	     ActionOverride(Player4,DisplayStringHead(Player4,@26))
+    	     ActionOverride(Player5,DisplayStringHead(Player5,@27))
+    	     ActionOverride(Player6,DisplayStringHead(Player6,@28))
+	     Wait(2)
+      	     ActionOverride("tb#lotrc",DisplayStringHead("tb#lotrc",@29))
+	     Wait(3)
+	     ActionOverride("tb#lotrc",Face(6))
+      	     ActionOverride("tb#lotrc",DisplayStringHead("tb#lotrc",@30))
+	     GiveItemCreate("potn13",Player1,3,3,0)
+	     GiveItemCreate("potn26",Player1,1,1,0)
+
+	     SetGlobalTimer("tb#lotrspawn","global",18)
+    	     SetGlobalTimer("tb#lotramn","global",30)
+	     EndCutSceneMode()
+END
+
+

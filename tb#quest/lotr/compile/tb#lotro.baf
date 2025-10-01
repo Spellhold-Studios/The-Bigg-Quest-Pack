@@ -1,0 +1,157 @@
+IF
+  GlobalTimerExpired("tb#lotrrouted","global")
+THEN
+    RESPONSE #100
+    	     Kill(Myself)
+END
+
+IF
+  Global("active","locals",0)
+  OR(8)
+       Heard([EVILCUTOFF],1)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],2)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+       Detect(NearestEnemyOf(Myself))
+       Global("tb#lotrgenactive","global",1)
+THEN
+    RESPONSE #100
+    	     SetGlobal("active","locals",1)
+    	     DisplayStringHead(Myself,@5)
+END
+
+IF
+  Global("active","Locals",0)
+THEN
+    RESPONSE #100
+    	     NoAction()
+END
+
+IF
+  Die()
+THEN
+    RESPONSE #100
+    	     IncrementGlobal("tb#lotrkilled","global",1)
+END
+
+IF
+  Global("tb#lotrgenactive","global",1)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject("tb#lotrg")
+END
+
+IF
+  HPPercentLT(Myself,25)
+  HasItem("potn08",Myself)
+  !GlobalTimerNotExpired("cast","locals")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     UseItem("potn08",Myself)
+    	     Continue()
+END
+
+IF
+  HPPercentLT(Myself,25)
+  !HasItem("Potn08",Myself)
+  !GlobalTimerNotExpired("shouted1","locals")
+THEN
+    RESPONSE #100
+    	     Shout(2)
+    	     SetGlobal("tb#lotrgivepotion","global",1)
+    	     DisplayStringHead(Myself,@16)
+    	     SetGlobalTimer("shouted1","locals",12)
+    	     Continue()
+END
+
+
+IF
+  OR(2)
+       Heard([EVILCUTOFF],2)
+       Heard([EVILCUTOFF],4)
+  Global("tb#lotrgivepotion","global",1)
+  HasItem("potn08",Myself)
+  HPPercentGT(Myself,35)
+THEN
+    RESPONSE #100
+    	     SetGlobal("tb#lotrgivePotion","global",0)
+	     DisplayStringHead(Myself,@8)
+    	     GiveItem("potn08",LastHeardBy(Myself))
+    	     ActionOverride(LastHeardBy(Myself),UseItem("potn08",LastHeardBy(Myself))
+    	     Continue()
+END
+
+
+IF
+  HPPercentLT(Myself,50)
+  HPPercentGT(Myself,25)
+  !GlobalTimerNotExpired("shouted","locals")
+THEN
+    RESPONSE #100
+    	     Shout(1)
+	     DisplayStringHead(Myself,@4)
+    	     SetGlobalTimer("shouted","locals",12)
+    	     Continue()
+END
+
+IF
+  OR(6)
+       Heard([EVILCUTOFF],1)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],2)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+  OR(7)
+       True()
+       Heard([EVILCUTOFF],1)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],2)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  OR(4)
+      See(NearestEnemyOfType([GOODCUTOFF]))
+      See(NearestEnemyOfType([PC]))
+      See(LastAttackerOf(LastHeardBy(Myself)))
+      See(LastAttackerOf(Myself))
+  !Range(LastSeenBy(Myself),4)
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastSeenBy)
+END
+
+IF
+  OR(7)
+       True()
+       Heard([EVILCUTOFF],1)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],2)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  OR(4)
+      See(NearestEnemyOfType([GOODCUTOFF]))
+      See(NearestEnemyOfType([PC]))
+      See(LastAttackerOf(LastHeardBy(Myself)))
+      See(LastAttackerOf(Myself))
+  Range(LastSeenBy(Myself),4)
+THEN
+    RESPONSE #100
+    	     AttackOneRound(LastSeenBy)
+END
+
+
+
+

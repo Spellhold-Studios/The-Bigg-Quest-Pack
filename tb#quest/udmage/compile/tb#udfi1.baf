@@ -1,0 +1,38 @@
+IF
+	!GlobalTimerNotExpired("hide","locals")
+	!See(NearestEnemyOf(Myself))
+	!StateCheck(Myself,STATE_INVISIBLE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("hide","locals",12)
+		Hide()
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	!StateCheck(Myself,STATE_INVISIBLE)
+	HaveSpellRES("tb#udinv") // Invisibility
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellRES("tb#udinv",Myself) // Invisibility
+END
+
+IF
+	StateCheck(Myself,STATE_INVISIBLE)
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	ActionListEmpty()
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		AttackOneRound(LastSeenBy(Myself))
+END
+
+

@@ -1,0 +1,131 @@
+IF
+	Global("tb#udduelstart","GLOBAL",1)
+THEN
+	RESPONSE #100
+		StartCutSceneMode()
+		MultiPlayerSync()
+		ActionOverride("uddrow34",DestroySelf())
+        ActionOverride(Player1,LeaveAreaLUA("AR2202","",[1729.676],4))
+        ActionOverride(Player2,LeaveAreaLUA("AR2202","",[1472.890],4))
+        ActionOverride(Player3,LeaveAreaLUA("AR2202","",[1493.921],4))
+        ActionOverride(Player4,LeaveAreaLUA("AR2202","",[1437.920],4))
+        ActionOverride(Player5,LeaveAreaLUA("AR2202","",[1419.883],4))
+        ActionOverride(Player6,LeaveAreaLUA("AR2202","",[1371.888],4))
+		ActionOverride(Player2,MakeUnselectable(30000)
+		ActionOverride(Player3,MakeUnselectable(30000)
+		ActionOverride(Player4,MakeUnselectable(30000)
+		ActionOverride(Player5,MakeUnselectable(30000)
+		ActionOverride(Player6,MakeUnselectable(30000)
+		SetGlobal("tb#udduelstart","GLOBAL",7)
+		EndCutSceneMode()
+END
+
+IF
+	Global("tb#udduelstart","GLOBAL",2)
+THEN
+	RESPONSE #100
+		StartCutSceneMode()
+		MultiPlayerSync()
+		ActionOverride("uddrow34",DestroySelf())
+        ActionOverride(Player2,LeaveAreaLUA("AR2202","",[1729.676],4))
+        ActionOverride(Player1,LeaveAreaLUA("AR2202","",[1472.890],4))
+        ActionOverride(Player3,LeaveAreaLUA("AR2202","",[1493.921],4))
+        ActionOverride(Player4,LeaveAreaLUA("AR2202","",[1437.920],4))
+        ActionOverride(Player5,LeaveAreaLUA("AR2202","",[1419.883],4))
+        ActionOverride(Player6,LeaveAreaLUA("AR2202","",[1371.888],4))
+		ActionOverride(Player1,MakeUnselectable(30000)
+		ActionOverride(Player3,MakeUnselectable(30000)
+		ActionOverride(Player4,MakeUnselectable(30000)
+		ActionOverride(Player5,MakeUnselectable(30000)
+		ActionOverride(Player6,MakeUnselectable(30000)
+		SetGlobal("tb#udduelstart","GLOBAL",7)
+		EndCutSceneMode()
+END
+
+IF
+	Global("tb#udduelstart","GLOBAL",3)
+THEN
+	RESPONSE #100
+		StartCutSceneMode()
+		MultiPlayerSync()
+		ActionOverride("uddrow34",DestroySelf())
+        ActionOverride(Player3,LeaveAreaLUA("AR2202","",[1729.676],4))
+        ActionOverride(Player2,LeaveAreaLUA("AR2202","",[1472.890],4))
+        ActionOverride(Player1,LeaveAreaLUA("AR2202","",[1493.921],4))
+        ActionOverride(Player4,LeaveAreaLUA("AR2202","",[1437.920],4))
+        ActionOverride(Player5,LeaveAreaLUA("AR2202","",[1419.883],4))
+        ActionOverride(Player6,LeaveAreaLUA("AR2202","",[1371.888],4))
+		ActionOverride(Player2,MakeUnselectable(30000)
+		ActionOverride(Player1,MakeUnselectable(30000)
+		ActionOverride(Player4,MakeUnselectable(30000)
+		ActionOverride(Player5,MakeUnselectable(30000)
+		ActionOverride(Player6,MakeUnselectable(30000)
+		SetGlobal("tb#udduelstart","GLOBAL",7)
+		EndCutSceneMode()
+END
+
+IF
+	Global("tb#udduelstart","GLOBAL",4)
+THEN
+	RESPONSE #100
+		StartCutSceneMode()
+		MultiPlayerSync()
+		ActionOverride("uddrow34",DestroySelf())
+        ActionOverride(Player4,LeaveAreaLUA("AR2202","",[1729.676],4))
+        ActionOverride(Player2,LeaveAreaLUA("AR2202","",[1472.890],4))
+        ActionOverride(Player3,LeaveAreaLUA("AR2202","",[1493.921],4))
+        ActionOverride(Player1,LeaveAreaLUA("AR2202","",[1437.920],4))
+        ActionOverride(Player5,LeaveAreaLUA("AR2202","",[1419.883],4))
+        ActionOverride(Player6,LeaveAreaLUA("AR2202","",[1371.888],4))
+		ActionOverride(Player2,MakeUnselectable(30000)
+		ActionOverride(Player3,MakeUnselectable(30000)
+		ActionOverride(Player1,MakeUnselectable(30000)
+		ActionOverride(Player5,MakeUnselectable(30000)
+		ActionOverride(Player6,MakeUnselectable(30000)
+		SetGlobal("tb#udduelstart","GLOBAL",7)
+		EndCutSceneMode()
+END
+
+IF
+	Global("tb#udduelstart","GLOBAL",5)
+THEN
+	RESPONSE #100
+		StartCutSceneMode()
+		MultiPlayerSync()
+		ActionOverride("uddrow34",DestroySelf())
+        ActionOverride(Player5,LeaveAreaLUA("AR2202","",[1729.676],4))
+        ActionOverride(Player2,LeaveAreaLUA("AR2202","",[1472.890],4))
+        ActionOverride(Player3,LeaveAreaLUA("AR2202","",[1493.921],4))
+        ActionOverride(Player4,LeaveAreaLUA("AR2202","",[1437.920],4))
+        ActionOverride(Player1,LeaveAreaLUA("AR2202","",[1419.883],4))
+        ActionOverride(Player6,LeaveAreaLUA("AR2202","",[1371.888],4))
+		ActionOverride(Player2,MakeUnselectable(30000)
+		ActionOverride(Player3,MakeUnselectable(30000)
+		ActionOverride(Player4,MakeUnselectable(30000)
+		ActionOverride(Player1,MakeUnselectable(30000)
+		ActionOverride(Player6,MakeUnselectable(30000)
+		SetGlobal("tb#udduelstart","GLOBAL",7)
+		EndCutSceneMode()
+END
+
+IF
+	Global("tb#udduelstart","GLOBAL",6)
+THEN
+	RESPONSE #100
+		StartCutSceneMode()
+		MultiPlayerSync()
+		ActionOverride("uddrow34",DestroySelf())
+        ActionOverride(Player6,LeaveAreaLUA("AR2202","",[1729.676],4))
+        ActionOverride(Player2,LeaveAreaLUA("AR2202","",[1472.890],4))
+        ActionOverride(Player3,LeaveAreaLUA("AR2202","",[1493.921],4))
+        ActionOverride(Player4,LeaveAreaLUA("AR2202","",[1437.920],4))
+        ActionOverride(Player5,LeaveAreaLUA("AR2202","",[1419.883],4))
+        ActionOverride(Player1,LeaveAreaLUA("AR2202","",[1371.888],4))
+		ActionOverride(Player2,MakeUnselectable(30000)
+		ActionOverride(Player3,MakeUnselectable(30000)
+		ActionOverride(Player4,MakeUnselectable(30000)
+		ActionOverride(Player5,MakeUnselectable(30000)
+		ActionOverride(Player1,MakeUnselectable(30000)
+		SetGlobal("tb#udduelstart","GLOBAL",7)
+		EndCutSceneMode()
+END

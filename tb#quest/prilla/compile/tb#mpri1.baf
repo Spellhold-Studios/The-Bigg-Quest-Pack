@@ -1,0 +1,41 @@
+IF
+  Global("prep","locals",0)
+THEN
+    RESPONSE #100
+             Enemy()
+             SetGlobal("prep","locals",1)
+END
+
+IF
+  !See([PC])
+  !GlobalTimerNotExpired("cast","locals")
+THEN
+    RESPONSE #100
+             ReallyForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+             SetGlobalTimer("cast","locals",6)
+END
+
+
+IF
+  !Range(NearestEnemyOfType([PC]),6)
+THEN
+    RESPONSE #100
+             MoveToObject(NearestEnemyOfType([PC]))
+END
+
+IF
+  !GlobalTimerNotExpired("sing","locals")
+THEN
+    RESPONSE #100
+             BattleSong()
+             Wait(6)
+             SetGlobalTimer("sing","locals",18)
+END
+
+IF
+  GlobalTimerNotExpired("sing","locals")
+THEN
+    RESPONSE #100
+             AttackOneRound(NearestEnemyOf(Myself))
+END
+

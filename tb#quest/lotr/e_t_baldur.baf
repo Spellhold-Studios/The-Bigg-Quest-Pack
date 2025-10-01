@@ -1,0 +1,19 @@
+IF
+  Global("tb#spawnedlotr","global",0)
+  XPGT(Player1,2500000)
+  OR(8)
+       AreaCheckObject("AR0020",Player1) //Cuty Gates
+       AreaCheckObject("Ar0300",Player1) //Docks
+       AreaCheckObject("Ar0400",Player1) //Slums
+       AreaCheckObject("Ar0500",Player1) //Bridge
+       AreaCheckObject("Ar0700",Player1) //Promenade
+       AreaCheckObject("Ar0800",Player1) //Graveyard
+       AreaCheckObject("Ar0900",Player1) //Temple
+       AreaCheckObject("Ar1000",Player1) //Goverment
+THEN
+    RESPONSE #100
+    	     CreateCreatureObject("tb#lotr",Player1,0,0,0)
+    	     SetGlobal("tb#spawnedlotr","global",1)
+END
+
+

@@ -1,0 +1,305 @@
+//7 7 7 6 4 3 1 Cleric 16th
+//5 5 5 4 4 2 1 Mage 14th
+//
+// Feats: Divine Shell, ?
+//
+// Sanctuary (3), Armor of Faith, Remove Fear, Absolute garbage
+// DUHM, Absolute Garbage
+// Unholy Blight (5), Zone of Sweet Air, Animate Dead (3)
+// Prot from evil: 4.5, Holy Power, Clck of fear (2), Mental Domination (2), Absolute Garbage
+// FlameStrike (5), Mass Heal (3), True Sight
+// Heal (3), Wondrous Recall (2), Conjure Aerial Servant, Bolt of Glory (2)
+// Gate, Finger of Death, Symbol:Stun, Regeneration
+//
+
+//note: I do not use any type of magic resistance, saves or spell defence check.
+//
+//cause 1: lazyness.
+//cause 2: AI cycles.
+//cause 3: Orcs aren't exactly smart, anyway.
+
+IF
+  GlobalTimerExpired("tb#lotrrouted","global")
+THEN
+    RESPONSE #100
+    	     Kill(Myself)
+END
+
+IF
+  Global("active","locals",0)
+  OR(5)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+       Detect(NearestEnemyOf(Myself))
+THEN
+    RESPONSE #100
+    	     SetGlobal("active","locals",1)
+    	     DisplayStringHead(Myself,"Shaurguth, give me strenght!")
+	     SetGlobal("c_l_w","locals",3)
+	     SetGlobal("sanct","locals",1)
+	     SetGlobal("hold","locals",2)
+	     SetGlobal("duhm","locals",1)
+	     SetGlobal("chant","locals",1)
+	     SetGlobal("indiv_invis","locals",1)
+	     SetGlobal("unh_bli","locals",1)
+	     SetGlobal("c_m_w","locals",1)
+	     SetGlobal("c_s_w","locals",2)
+	     SetGlobal("holy_might","locals",1)
+	     SetGlobal("g_command","locals",1)
+	     SetGlobalTimer("buff","locals",18)
+END
+
+
+IF
+  Global("active","Locals",0)
+THEN
+    RESPONSE #100
+    	     NoAction()
+END
+
+IF
+  Die()
+THEN
+    RESPONSE #100
+    	     IncrementGlobal("tb#lotrkilled","global",1)
+END
+
+IF
+  Global("tb#lotrgenactive","global",1)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject("tb#lotrg")
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Heard([EVILCUTOFF],6)
+  Global("c_s_w","locals",1)
+  !GlobalTimerNotExpired("cast","locals")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SpellNoDec(LastHeardBy,CLERIC_CURE_SERIOUS_WOUNDS)
+    	     SetGlobal("tb#lotrgivepotion","global",0)
+    	     SetGlobal("c_s_w","Locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  HPPercentLT(Myself,25)
+  Global("c_m_w","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SpellNoDec(Myself,CLERIC_CURE_MEDIUM_WOUNDS)
+    	     SetGlobal("tb#lotrgivepotion","global",0)
+    	     SetGlobal("c_m_w","Locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Heard([EVILCUTOFF],4)
+  Global("c_m_w","locals",1)
+  Global("tb#lotrgivepotion","global",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SpellNoDec(LastHeardBy,CLERIC_CURE_MEDIUM_WOUNDS)
+    	     SetGlobal("tb#lotrgivepotion","global",0)
+    	     SetGlobal("c_m_w","Locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  HPPercentLT(Myself,25)
+  GlobalGT("c_l_w","locals",0)
+  Global("tb#lotrgivepotion","global",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SpellNoDec(Myself,CLERIC_CURE_LIGHT_WOUNDS)
+    	     SetGlobal("tb#lotrgivepotion","global",0)
+    	     IncrementGlobal("c_l_w","Locals",-1)
+END
+
+
+IF
+  HPPercentLT(Myself,25)
+  HasItem("potn52",Myself)
+  !GlobalTimerNotExpired("cast","locals")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     UseItem("potn52",Myself)
+    	     Continue()
+END
+
+IF
+  HPPercentLT(Myself,25)
+  !HasItem("Potn52",Myself)
+  !GlobalTimerNotExpired("shouted1","locals")
+THEN
+    RESPONSE #100
+    	     Shout(4)
+    	     SetGlobal("tb#lotrgivepotion","global",1)
+    	     DisplayStringHead(Myself,"A healer! I am out of spells!")
+    	     SetGlobalTimer("shouted1","locals",12)
+    	     Continue()
+END
+
+
+IF
+  OR(2)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],6)
+  Global("tb#lotrgivepotion","global",1)
+  HasItem("potn52",Myself)
+  HPPercentGT(Myself,35)
+THEN
+    RESPONSE #100
+    	     SetGlobal("tb#lotrgivePotion","global",0)
+	     DisplayStringHead(Myself,"Here! Take it!")
+    	     GiveItem("potn52",LastHeardBy(Myself))
+    	     Continue()
+END
+
+
+IF
+  HPPercentLT(Myself,50)
+  HPPercentGT(Myself,25)
+  !GlobalTimerNotExpired("shouted","locals")
+THEN
+    RESPONSE #100
+    	     Shout(3)
+	     DisplayStringHead(Myself,"Defend me!")
+    	     SetGlobalTimer("shouted","locals",12)
+    	     Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalTimerExpired("buff","locals")
+  Global("holy","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("buff","locals",12)
+    	     SpellNoDec(Myself,CLERIC_HOLY_POWER)
+    	     SetGlobal("holy","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalTimerExpired("buff","locals")
+  Global("duhm","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("buff","locals",12)
+    	     SpellNoDec(Myself,CLERIC_DRAW_UPON_HOLY_MIGHT)
+    	     SetGlobal("duhm","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Detect([GOODCUTOFF])
+  !See([GOODCUTOFF])
+  Global("indiv_invis","locals",1)
+  !GlobalTimerNotExpired("tb#lotrindiv_invis","global")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("tb#lotrindiv_invs","global",12)
+    	     SpellNoDec(Myself,CLERIC_INVISIBILITY_PURGE)
+    	     SetGlobal("indiv_invis","locals",0)
+END
+
+IF
+  OR(4)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+  Range(LastAttackerOf(Myself),4)
+THEN
+    RESPONSE #50
+    	     RunAwayFrom(LastSeenBy(Myself),30)
+END
+
+IF
+  OR(3)
+      See(NearestEnemyOfType([GOODCUTOFF]))
+      See(NearestEnemyOfType([PC]))
+      See(LastAttackerOf(Myself))
+  !Range(LastSeenBy(Myself),4)
+THEN
+    RESPONSE #100
+    	     Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("g_command","locals",1)
+THEN
+    RESPONSE #100
+    	     Wait(2)
+	     SetGlobalTimer("cast","locals",6)
+	     SpellNoDec(LastSeenBy(Myself),CLERIC_GREATER_COMMAND)  //hopefully mage1 will ahve just casted Greater Malison
+	     SetGlobal("g_command","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("unh_bli","locals",1)
+  Alignment(LastSeenBy,MASK_GOOD)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("unh_bli","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),CLERIC_UNHOLY_BLIGHT)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("chant","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("chant","locals",-1)
+    	     SpellNoDec(Nearest([EVILCUTOFF]),CLERIC_CHANT)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("hold","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("hold","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),CLERIC_HOLD_PERSON)
+END
+
+IF
+  !Range(LastSeenBy,4)
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastSeenBy)
+END
+
+IF
+  Range(LastSeenBy,4)
+THEN
+    RESPONSE #100
+    	     AttackOneRound(LastSeenBy)
+END
+

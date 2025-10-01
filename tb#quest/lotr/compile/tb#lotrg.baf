@@ -1,0 +1,199 @@
+IF
+  GlobalTimerExpired("tb#lotrrouted","global")
+THEN
+    RESPONSE #100
+    	     Kill(Myself)
+END
+
+IF
+  Global("active","locals",0)
+  OR(3)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+       Detect(NearestEnemyOf(Myself))
+THEN
+    RESPONSE #100
+    	     SetGlobal("active","locals",1)
+    	     DisplayStringHead(Myself,@5)
+END
+
+IF
+  Global("active","Locals",0)
+THEN
+    RESPONSE #100
+    	     NoAction()
+END
+
+IF
+  Die()
+THEN
+    RESPONSE #100
+    	     IncrementGlobal("tb#lotrkilled","global",1)
+END
+
+IF
+  NumTimesTalkedTo(0)
+  See([PC])
+THEN
+    RESPONSE #100
+    	     SetGlobal("tb#lotrgenactive","global",1)
+    	     SetGlobal("rage","locals",6)
+    	     SetGlobal("warcry","locals",1)
+    	     SetGlobal("gwarcry","locals",1)
+    	     SetGlobal("res_mag","locals",1)
+    	     SpellNoDec(Myself,WARRIOR_HARDINESS)
+    	     SetGlobalTimer("cast","locals",6)
+    	     StartDialogueNoSet(Player1)
+END
+
+IF
+  HPPercentLT(Myself,25)
+  HasItem("potn52",Myself)
+  !GlobalTimerNotExpired("cast","locals")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     UseItem("potn52",Myself)
+    	     Continue()
+END
+
+IF
+  HPPercentLT(Myself,25)
+  !HasItem("Potn52",Myself)
+  !GlobalTimerNotExpired("shouted1","locals")
+THEN
+    RESPONSE #100
+    	     Shout(6)
+    	     SetGlobal("tb#lotrgivepotion","global",1)
+    	     DisplayStringHead(Myself,@6)
+    	     SetGlobalTimer("shouted1","locals",12)
+    	     Continue()
+    RESPONSE #20
+    	     DisplayStringHead(Myself,@7)
+    	     CreateCreatureObject("tb#lotrs",Myself,0,0,0)
+    	     Shout(6)
+    	     SetGlobal("tb#lotrgivepotion","global",1)
+    	     SetGlobalTimer("shouted1","locals",12)
+    	     Continue()
+END
+
+IF
+       Heard([EVILCUTOFF],6)
+  Global("tb#lotrgivepotion","global",1)
+  HasItem("potn52",Myself)
+  HPPercentGT(Myself,35)
+THEN
+    RESPONSE #100
+    	     SetGlobal("tb#lotrgivePotion","global",0)
+    	     GiveItem("potn52",LastHeardBy(Myself))
+	     DisplayStringHead(Myself,@8)
+    	     Continue()
+END
+
+
+IF
+  HPPercentLT(Myself,50)
+  HPPercentGT(Myself,25)
+  !GlobalTimerNotExpired("shouted","locals")
+THEN
+    RESPONSE #100
+    	     Shout(5)
+	     DisplayStringHead(Myself,@4)
+    	     SetGlobalTimer("shouted","locals",12)
+    	     Continue()
+    RESPONSE #50
+	     DisplayStringHead(Myself,@9)
+	     CreateCreatureObject("tb#lotgw",Myself,0,0,0)
+    	     Shout(5)
+    	     SetGlobalTimer("shouted","locals",12)
+    	     Continue()
+END
+
+IF
+  GlobalTimerExpired("cast","locals")
+  !GlobalTimerNotExpired("rage","locals")
+  GlobalGT("rage","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("rage","locals",60)
+    	     SpellNoDec(Myself,BERSERKER_RAGE)
+	     IncrementGlobal("rage","locals",-1)
+END
+
+IF
+  GlobalTimerExpired("cast","locals")
+  Global("res_mag","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SpellNoDec(Myself,WARRIOR_RESIST_MAGIC)
+	     IncrementGlobal("res_mag","locals",-1)
+END
+
+IF
+  OR(2)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+  OR(3)
+       True()
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  OR(4)
+      See(NearestEnemyOfType([GOODCUTOFF]))
+      See(NearestEnemyOfType([PC]))
+      See(LastAttackerOf(LastHeardBy(Myself)))
+      See(LastAttackerOf(Myself))
+  !Range(LastSeenBy(Myself),4)
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastSeenBy)
+END
+
+IF
+  GlobalTimerExpired("cast","locals")
+  Global("gwarcry","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SpellNoDecRES("tg#gcr2",Myself)  //Refinements Greater War Cry
+	     IncrementGlobal("gwarcry","locals",-1)
+END
+
+IF
+  GlobalTimerExpired("cast","locals")
+  Global("warcry","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SpellNoDec(Myself,WARRIOR_WAR_CRY)
+	     IncrementGlobal("warcry","locals",-1)
+END
+
+
+IF
+  OR(3)
+       True()
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  OR(4)
+      See(NearestEnemyOfType([GOODCUTOFF]))
+      See(NearestEnemyOfType([PC]))
+      See(LastAttackerOf(LastHeardBy(Myself)))
+      See(LastAttackerOf(Myself))
+  Range(LastSeenBy(Myself),4)
+THEN
+    RESPONSE #100
+    	     AttackOneRound(LastSeenBy)
+END
+
+
+
+

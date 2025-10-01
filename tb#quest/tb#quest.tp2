@@ -1,0 +1,445 @@
+BACKUP ~tb#quest/backup~
+AUTHOR ~wal.big.it@libero.it~
+
+NO_IF_EVAL_BUG
+
+README ~tb#quest/readme-TB#Quest-%LANGUAGE%.htm~ ~tb#quest/readme-TB#Quest.htm~
+
+VERSION 2.04
+
+AUTO_TRA ~tb#quest/english~
+AUTO_TRA ~tb#quest/%s~
+
+ALWAYS
+
+	ACTION_IF NOT FILE_EXISTS ~override/tb#questappends.txt~ THEN BEGIN
+		COPY_EXISTING ~sw1h01.itm~ ~override/tb#questappends.txt~
+
+		APPEND ~TRIGGER.IDS~ ~0x40D5 ActuallyInCombat()~
+			 UNLESS ~ActuallyInCombat()~
+		APPEND ~TRIGGER.IDS~ ~0x00D6 WalkedToTrigger(O:Object*)~
+			 UNLESS ~WalkedToTrigger(O:Object*)~
+		APPEND ~TRIGGER.IDS~ ~0x40D7 LevelParty(I:Num*)~
+			 UNLESS ~LevelParty(I:Num*)~
+		APPEND ~TRIGGER.IDS~ ~0x40D8 LevelPartyGT(I:Num*)~
+			 UNLESS ~LevelPartyGT(I:Num*)~
+		APPEND ~TRIGGER.IDS~ ~0x40D9 LevelPartyLT(I:Num*)~
+			 UNLESS ~LevelPartyLT(I:Num*)~
+		APPEND ~TRIGGER.IDS~ ~0x40DA HaveSpellParty(I:Spell*Spell)~
+			 UNLESS ~HaveSpellParty(I:Spell*Spell)~
+		APPEND ~TRIGGER.IDS~ ~0x4031 HaveSpellRES(S:Spell*)~
+			 UNLESS ~HaveSpellRES(S:Spell*)~
+		APPEND ~TRIGGER.IDS~ ~0x40DB AmIInWatchersKeepPleaseIgnoreTheLackOfApostophe()~
+			 UNLESS ~AmIInWatchersKeepPleaseIgnoreTheLackOfApostophe()~
+		APPEND ~TRIGGER.IDS~ ~0x40DB InWatchersKeep()~
+			 UNLESS ~InWatchersKeep()~
+
+		APPEND ~ACTION.IDS~ ~325 GoToStartScreen()~
+			 UNLESS ~GoToStartScreen()~
+		APPEND ~ACTION.IDS~ ~326 ExitPocketPlane()~
+			 UNLESS ~ExitPocketPlane()~
+		APPEND ~ACTION.IDS~ ~327 AddXP2DA(S:Column*)~
+			 UNLESS ~AddXP2DA(S:Column*)~
+		APPEND ~ACTION.IDS~ ~328 RemoveMapNote(P:Position*,I:STRREF*)~
+			 UNLESS ~RemoveMapNote(P:Position*,I:STRREF*)~
+		APPEND ~ACTION.IDS~ ~329 TriggerWalkTo(O:Object*)~
+			 UNLESS ~TriggerWalkTo(O:Object*)~
+		APPEND ~ACTION.IDS~ ~330 AddAreaType(I:Type*AREATYPE)~
+			 UNLESS ~AddAreaType(I:Type*AREATYPE)~
+		APPEND ~ACTION.IDS~ ~331 RemoveAreaType(I:Type*AREATYPE)~
+			 UNLESS ~RemoveAreaType(I:Type*AREATYPE)~
+		APPEND ~ACTION.IDS~ ~332 AddAreaFlag(I:Type*AREAFLAG)~
+			 UNLESS ~AddAreaFlag(I:Type*AREAFLAG)~
+		APPEND ~ACTION.IDS~ ~333 RemoveAreaFlag(I:Type*AREAFLAG)~
+			 UNLESS ~RemoveAreaFlag(I:Type*AREAFLAG)~
+		APPEND ~ACTION.IDS~ ~334 StartDialogNoName(S:DialogFile*,O:Target*)~
+			 UNLESS ~StartDialogNoName(S:DialogFile*,O:Target*)~
+		APPEND ~ACTION.IDS~ ~335 SetTokenGlobal(S:GLOBAL*,S:Area*,S:Token*)~
+			 UNLESS ~SetTokenGlobal(S:GLOBAL*,S:Area*,S:Token*)~
+		APPEND ~ACTION.IDS~ ~336 MakeGlobal()~
+			 UNLESS ~MakeGlobal()~
+		APPEND ~ACTION.IDS~ ~337 ReallyForceSpellPoint(P:Target*,I:Spell*Spell)~
+			 UNLESS ~ReallyForceSpellPoint(P:Target*,I:Spell*Spell)~
+		APPEND ~ACTION.IDS~ ~338 SetCursorState(I:BOOL*BOOLEAN)~
+			 UNLESS ~SetCursorState(I:BOOL*BOOLEAN)~
+		APPEND ~ACTION.IDS~ ~338 SetCutSceneLite(I:BOOL*BOOLEAN)~
+			 UNLESS ~SetCutSceneLite(I:BOOL*BOOLEAN)~
+		APPEND ~ACTION.IDS~ ~339 SwingOnce()~
+			 UNLESS ~SwingOnce()~
+		APPEND ~ACTION.IDS~ ~340 StaticSequence(O:Object*,I:Sequence*)~
+			 UNLESS ~StaticSequence(O:Object*,I:Sequence*)~
+		APPEND ~ACTION.IDS~ ~341 StaticPalette(S:Palette*,O:Object*)~
+			 UNLESS ~StaticPalette(S:Palette*,O:Object*)~
+		APPEND ~ACTION.IDS~ ~31 SpellRES(S:RES*,O:Target*)~
+			 UNLESS ~SpellRES(S:RES*,O:Target*)~
+		APPEND ~ACTION.IDS~ ~95 SpellPointRES(S:RES*,P:Target*)~
+			 UNLESS ~SpellPointRES(S:RES*,P:Target*)~
+		APPEND ~ACTION.IDS~ ~113 ForceSpellRES(S:RES*,O:Target)~
+			 UNLESS ~ForceSpellRES(S:RES*,O:Target)~
+		APPEND ~ACTION.IDS~ ~114 ForceSpellPointRES(S:RES*,P:Target)~
+			 UNLESS ~ForceSpellPointRES(S:RES*,P:Target)~
+		APPEND ~ACTION.IDS~ ~160 ApplySpellRES(S:RES*,O:Target)~
+			 UNLESS ~ApplySpellRES(S:RES*,O:Target)~
+		APPEND ~ACTION.IDS~ ~181 ReallyForceSpellRES(S:RES*,O:Target)~
+			 UNLESS ~ReallyForceSpellRES(S:RES*,O:Target)~
+		APPEND ~ACTION.IDS~ ~191 SpellNoDecRES(S:RES*,O:Target*)~
+			 UNLESS ~SpellNoDecRES(S:RES*,O:Target*)~
+		APPEND ~ACTION.IDS~ ~192 SpellPointNoDecRES(S:RES*,P:Target*)~
+			 UNLESS ~SpellPointNoDecRES(S:RES*,P:Target*)~
+		APPEND ~ACTION.IDS~ ~240 ReallyForceSpellDeadRES(S:RES*,O:Target)~
+			 UNLESS ~ReallyForceSpellDeadRES(S:RES*,O:Target)~
+		APPEND ~ACTION.IDS~ ~318 ForceSpellRangeRES(S:RES*,O:Target)~
+			 UNLESS ~ForceSpellRangeRES(S:RES*,O:Target)~
+		APPEND ~ACTION.IDS~ ~319 ForceSpellPointRangeRES(S:RES*,P:Target)~
+			 UNLESS ~ForceSpellPointRangeRES(S:RES*,P:Target)~
+		APPEND ~ACTION.IDS~ ~337 ReallyForceSpellPointRES(S:RES*,P:Target*)~
+			 UNLESS ~ReallyForceSpellPointRES(S:RES*,P:Target*)~
+		APPEND ~ACTION.IDS~ ~342 DisplayStringHeadDead(O:Object*,I:StrRef*)~
+			 UNLESS ~DisplayStringHeadDead(O:Object*,I:StrRef*)~
+		APPEND ~ACTION.IDS~ ~343 MoveToExpansion()~
+			 UNLESS ~MoveToExpansion()~
+		APPEND ~ACTION.IDS~ ~344 StartRainNow()~
+			 UNLESS ~StartRainNow()~
+		APPEND ~ACTION.IDS~ ~345 SetSequence(I:Sequence*SEQ)~
+			 UNLESS ~SetSequence(I:Sequence*SEQ)~
+		APPEND ~ACTION.IDS~ ~346 DisplayStringNoNameHead(O:Object*,I:StrRef*)~
+			 UNLESS ~DisplayStringNoNameHead(O:Object*,I:StrRef*)~
+		APPEND ~ACTION.IDS~ ~347 SetEncounterProbability(S:FromArea*,S:ToArea*,I:Probability*)~
+			 UNLESS ~SetEncounterProbability(S:FromArea*,S:ToArea*,I:Probability*)~
+		APPEND ~ACTION.IDS~ ~348 SetupWish(I:Column*,I:Count*)~
+			 UNLESS ~SetupWish(I:Column*,I:Count*)~
+		APPEND ~ACTION.IDS~ ~349 SetupWishObject(O:Creature*,I:Count*)~
+			 UNLESS ~SetupWishObject(O:Creature*,I:Count*)~
+		APPEND ~ACTION.IDS~ ~350 LeaveAreaLUAEntry(S:Area*,S:Entry*,P:Point*,I:Face*)~
+			 UNLESS ~LeaveAreaLUAEntry(S:Area*,S:Entry*,P:Point*,I:Face*)~
+		APPEND ~ACTION.IDS~ ~351 LeaveAreaLUAPanicEntry(S:Area*,S:Entry*,P:Point*,I:Face*)~
+			 UNLESS ~LeaveAreaLUAPanicEntry(S:Area*,S:Entry*,P:Point*,I:Face*)~
+
+		//Scriptable Spells, courthesy of Cirrerek
+		  COPY_EXISTING
+		    ~SPCL232.spl~ ~override/SPCL232.spl~
+		    ~SPCL412.spl~ ~override/SPCL412.spl~
+		    ~SPCL414.spl~ ~override/SPCL414.spl~
+		    ~SPCL621.spl~ ~override/SPCL621.spl~
+		    ~SPCL721.spl~ ~override/SPCL721.spl~
+		    ~SPCL722.spl~ ~override/SPCL722.spl~
+		    ~SPCL731.spl~ ~override/SPCL731.spl~
+		    ~SPCL732.spl~ ~override/SPCL732.spl~
+		    ~SPCL741.spl~ ~override/SPCL741.spl~
+		    ~SPCL742.spl~ ~override/SPCL742.spl~
+		    ~SPIN696.spl~ ~override/SPIN696.spl~
+		    ~SPIN697.spl~ ~override/SPIN697.spl~
+		    ~SPIN698.spl~ ~override/SPIN698.spl~
+		    ~SPIN891.spl~ ~override/SPIN891.spl~
+		  	WRITE_LONG 0x34 1
+		  BUT_ONLY_IF_IT_CHANGES
+
+			ACTION_IF FILE_EXISTS ~data/25spells.bif~ THEN BEGIN
+			  COPY_EXISTING
+			    ~SPCL910.spl~ ~override/SPCL910.spl~
+			    ~SPCL911.spl~ ~override/SPCL911.spl~
+			    ~SPCL912.spl~ ~override/SPCL912.spl~
+			    ~SPCL923.spl~ ~override/SPCL923.spl~
+			  	WRITE_LONG 0x34 1
+		  	  BUT_ONLY_IF_IT_CHANGES
+			END
+	END     // ACTION_IF not already applied
+END         // ALWAYS
+
+LANGUAGE ~English~
+	 ~English~
+	 ~tb#quest/English/setup.tra~
+
+LANGUAGE ~Castellano (traducido por Clan REO)~
+	 ~Spanish~
+	 ~tb#quest/Spanish/setup.tra~
+	 
+LANGUAGE ~Russian~
+	 ~Russian~
+	 ~tb#quest/Russian/setup.tra~
+
+	 BEGIN @1600  //Mprilla the spammer
+UNINSTALL ~setup-tb#pack.tp2~ 2
+UNINSTALL "setup-prilla.tp2" 0
+
+ACTION_IF FILE_EXISTS ~override/tb#pril1.txt~ THEN BEGIN
+FAIL @60 END
+
+COPY_EXISTING ~sw1h01.itm~ ~override/tb#pril1.txt~
+//this file will help other mods detect if component is installed.
+
+COPY ~tb#quest/prilla/tb#mpril.cre~ ~override~
+     SAY NAME1 @1601
+     SAY NAME2 @1601
+
+COPY ~tb#quest/prilla/tb#mpril.cre~ ~override/tb#mpri1.cre~
+     SAY NAME1 @1602
+     SAY NAME2 @1602
+     WRITE_ASCII 0x0248 "tb#mpri1"
+     WRITE_ASCII 0x0280 "tb#mpri1"
+     WRITE_BYTE 0x0275 6 //Gender: Summoned
+
+COPY "tb#quest/prilla/copy" "override"
+
+COMPILE "tb#quest/prilla/compile"
+
+EXTEND_TOP "ar0700.bcs" "tb#quest/prilla/ar0700.baf"
+
+
+
+
+
+
+
+/* ****************************************
+          MPRILLA THE CHEATER
+**************************************** */
+
+BEGIN @1700
+REQUIRE_COMPONENT ~tb#quest/tb#quest.tp2~ ~0~ @1701
+UNINSTALL ~setup-tb#pack.tp2~ 3
+UNINSTALL "setup-prilla.tp2" 1
+ACTION_IF FILE_EXISTS ~override/tb#pril2.txt~ THEN BEGIN
+FAIL @60
+END
+//this file will help other mods detect if component is installed.
+
+COPY_EXISTING ~sw1h01.itm~ ~override/tb#pril2.txt~
+
+COPY ~tb#quest/prilla/cheat/tb#mpril.cre~ ~override~
+     SAY NAME1 @1601
+     SAY NAME2 @1601
+
+COMPILE "tb#quest/prilla/cheat/tb#mpril.baf"
+
+
+
+
+
+
+
+
+/* ****************************************
+          LARGE SCALE BATTLE
+**************************************** */
+
+BEGIN @2000
+UNINSTALL ~setup-ztb#pack.tp2~ 2
+ACTION_IF FILE_EXISTS ~override/tb#lotr.txt~ THEN BEGIN
+FAIL @60 END
+//this file will help other mods detect if component is installed.
+
+COPY_EXISTING ~sw1h01.itm~ ~override/tb#lotr.txt~
+COPY "tb#quest/lotr/TB#001.are" "override"
+//mypatch
+
+COPY "tb#quest/lotr/copy" "override"
+
+COPY ~tb#quest/lotr/tb#lotr.cre~ ~override~
+SAY NAME1 @2002
+SAY NAME2 @2002
+
+COPY ~tb#quest/lotr/tb#lotgw.cre~ ~override~
+SAY NAME1 @2003
+SAY NAME2 @2003
+
+COPY ~tb#quest/lotr/tb#lotgm.cre~ ~override~
+SAY NAME1 @2004
+SAY NAME2 @2004
+
+COPY ~tb#quest/lotr/tb#lotgc.cre~ ~override~
+SAY NAME1 @2005
+SAY NAME2 @2005
+
+COPY ~tb#quest/lotr/tb#lotga.cre~ ~override~
+SAY NAME1 @2006
+SAY NAME2 @2006
+
+COPY ~tb#quest/lotr/tb#lotrg.cre~ ~override~
+SAY NAME1 @2007
+SAY NAME2 @2007
+
+COPY ~tb#quest/lotr/tb#lotr1.cre~ ~override~
+SAY NAME1 @2008
+SAY NAME2 @2008
+
+COPY ~tb#quest/lotr/tb#lotr2.cre~ ~override~
+SAY NAME1 @2009
+SAY NAME2 @2009
+
+COPY ~tb#quest/lotr/tb#lotr1.itm~ ~override~
+SAY NAME1 @2010
+SAY NAME2 @2010
+SAY UNIDENTIFIED_DESC @2011
+SAY DESC @2011
+
+COPY_EXISTING ~spwi603.spl~ ~override/tb#lotr1.spl~
+READ_LONG 0x64 "headoffset"
+READ_SHORT 0x68 "headcount"
+READ_LONG 0x6a "effectsoffset"
+WHILE ("%headcount%" > 0) BEGIN
+   READ_SHORT ("%headoffset%" + (("%headcount%" - 1 ) * 0x28) + 0x1e) "count"
+   READ_SHORT ("%headoffset%" + (("%headcount%" - 1 ) * 0x28) + 0x20) "effectsindex"
+   WHILE ("%count%" >0) BEGIN
+      READ_SHORT ("%effectsoffset%" + ("%effectsindex%" + "%count%" - 1 )* 0x30) "OPcode"
+      READ_LONG (4 +"%effectsoffset%" + ("%effectsindex%" + "%count%" - 1 )* 0x30) "par1"
+      READ_LONG (8 +"%effectsoffset%" + ("%effectsindex%" + "%count%" - 1 )* 0x30) "par2"
+      SET "patchdone" = 0
+      WHILE (("%OPcode%" = 54) AND (~%patchdone%~ = 0) AND ("%par2%"=0)) BEGIN                 //if it's thac0 bonus - inc/dec
+      	    WRITE_LONG (4 +"%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 0   //no bonus
+      	    SET "patchdone" = 1
+      END
+      WHILE (("%OPcode%" = 18) AND (~%patchdone%~ = 0)) BEGIN                 //if it's hp bonus
+      	    WRITE_LONG (4 +"%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 150   //150, not 200
+      	    SET "patchdone" = 1
+      END
+      WHILE (("%OPcode%" = 145) AND (~%patchdone%~ = 0) AND ("%par2%"=0)) BEGIN                 //if it's disable spellcasting - wizard
+      	    WRITE_SHORT ("%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 60   //spellcasting failure
+      	    WRITE_LONG (4 +"%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 15   //15%
+      	    WRITE_LONG (8 +"%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 0   //inc/dec type of modifier
+      	    SET "patchdone" = 1
+      END
+      WHILE (("%OPcode%" = 145) AND (~%patchdone%~ = 0) AND ("%par2%"=1)) BEGIN                 //if it's disable spellcasting - cleric
+      	    WRITE_SHORT ("%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 189   //increase spellcasting speed
+      	    WRITE_LONG (4 +"%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 0xfffffffe   //0xfffffffe means -2 in exadecimal, if it's a 4-byte. Go figure ;-)
+      	    SET "patchdone" = 1
+      END
+      WHILE (("%OPcode%" = 145) AND (~%patchdone%~ = 0) AND ("%par2%"=2)) BEGIN                 //if it's disable spellcasting - innate
+      	    WRITE_SHORT ("%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 244   //remove wizard spell
+      	    WRITE_LONG (4 +"%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 1   //just one...
+      	    SET "patchdone" = 1
+      END
+      SET "count" = ("%count%" -1)
+   END
+   SET "headcount" = "%headcount%" - 1
+END
+
+SAY NAME1 @2010
+SAY UNIDENTIFIED_DESC @2011
+
+
+COMPILE "tb#quest/lotr/compile"
+USING ~tb#quest/%s/lotrscri.tra~
+
+COMPILE ~tb#quest/lotr/tb#lotr.d~
+
+EXTEND_TOP "baldur.bcs" "tb#quest/lotr/e_t_baldur.baf"
+
+ACTION_IF ~%WEIDU_OS%~ STRING_EQUAL_CASE ~win32~ THEN BEGIN
+  AT_INTERACTIVE_EXIT ~tb#quest/lotr/install.bat~
+  AT_INTERACTIVE_UNINSTALL ~tb#quest/lotr/uninstall.bat~
+END ELSE BEGIN
+  AT_INTERACTIVE_EXIT ~sh tb#quest/lotr/install.sh~
+  AT_INTERACTIVE_UNINSTALL ~sh tb#quest/lotr/uninstall.sh~
+END
+
+
+
+/* ****************************************
+          UNDERDARK MAGE DUEL
+**************************************** */
+
+BEGIN @3000
+
+EXTEND_BOTTOM ~ar2200.bcs~ ~tb#quest/udmage/et_ar2200.baf~
+EXTEND_BOTTOM ~ar2202.bcs~ ~tb#quest/udmage/et_ar2202.baf~
+
+COPY ~tb#quest/udmage/tb#udfi1.cre~ ~override~
+	SAY NAME1 @3001
+	SAY NAME2 @3001
+
+COPY ~tb#quest/udmage/tb#udfi2.cre~ ~override~
+	SAY NAME1 @3002
+	SAY NAME2 @3002
+
+COPY_EXISTING ~uddrow34.cre~ ~override~
+
+COPY ~tb#quest/udmage/tb#udrow.cre~ ~override~
+	 ~override/uddrow34.cre~		~override~
+	SAY NAME1 @3003
+	SAY NAME2 @3003
+
+COPY ~tb#quest/udmage/tb#udfig.itm~ ~override~
+	SAY NAME1 @3004
+	SAY NAME2 @3004
+	SAY UNIDENTIFIED_DESC @3005
+	SAY DESC @3006
+
+COPY ~tb#quest/udmage/copy~ ~override~
+
+COPY_EXISTING ~spidsw1.itm~ ~override~ // spiders can now backstab
+	WRITE_LONG 0x1e 0 // removes all unusabilities, including the thief one
+					  // crude, but that'll do - the player can't get it after all  ;)
+BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~sppr411.spl~ ~override/tb#udpoi.spl~ // copies of Web, Poison and Invisibility useable once per
+			  ~spwi215.spl~ ~override/tb#udweb.spl~ // round. Original idea contained in Refinements.
+			  ~spin118.spl~ ~override/tb#udinv.spl~
+    READ_LONG   0x64 ext_off
+    READ_SHORT  0x68 ext_count
+	READ_LONG   0x6a eff_off
+	READ_SHORT  0x6e eq_eff_indx
+	READ_SHORT  0x70 eq_eff_count
+	WRITE_SHORT 0x70 2 + eq_eff_count
+	INSERT_BYTES eff_off + eq_eff_count 0x60 // two effects
+	  WRITE_SHORT           eff_off        172			// remove spell
+	  WRITE_BYTE            eff_off + 0x02 1			// on self
+	  WRITE_BYTE           eff_off + 0x0c 1			// Permanent until death
+	  WRITE_BYTE            eff_off + 0x12 100			// probability
+	  WRITE_EVALUATED_ASCII eff_off + 0x14 ~%DEST_RES%~ // spell to remove
+
+	  WRITE_SHORT           eff_off + 0x30 171			// give innate ability
+	  WRITE_BYTE            eff_off + 0x32 1			// on self
+	  WRITE_BYTE            eff_off + 0x3c 4			// Permanent/delay
+	  WRITE_LONG			eff_off + 0x3e 12			// two rounds
+	  PATCH_IF (~%SOURCE_RES%~ STRING_EQUAL_CASE ~spwi215~) BEGIN // if Web
+	  	WRITE_LONG 			eff_off + 0x3e 60			// Web
+	  END
+	  WRITE_BYTE            eff_off + 0x42 100			// probability
+	  WRITE_EVALUATED_ASCII eff_off + 0x44 ~%DEST_RES%~ // spell to remove
+
+	WRITE_SHORT 0x1c 4  // is innate
+	WRITE_LONG  0x34 1  // level
+	// extended header index update & type update
+	FOR (j = 0; j < ext_count; j += 1)
+	BEGIN
+	    READ_SHORT  (ext_off + (j * 0x28) + 0x20) ext_eff_indx ELSE 0
+    	WRITE_SHORT (ext_off + (j * 0x28) + 0x20) ext_eff_indx + 2
+    	WRITE_SHORT (ext_off + (j * 0x28) + 0x02) 4 // innate
+    	WRITE_LONG  (ext_off + (j * 0x28) + 0x12) 1 // casting speed
+	END
+BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spwi309.spl~ ~override/tb#udsu1.spl~ // Monster Summoning I
+              ~spwi407.spl~ ~override/tb#udsu2.spl~ // Monster Summoning II
+              ~spwi501.spl~ ~override/tb#udani.spl~ // Animate Dead
+              ~spwi423.spl~ ~override/tb#udspi.spl~ // Spider Spawn
+// creates a copy which lasts only 30 seconds.
+READ_LONG 0x64 "headoffset" ELSE 0
+READ_SHORT 0x68 "headcount" ELSE 0
+READ_LONG 0x6a "effectsoffset" ELSE 0
+WHILE ("%headcount%" > 0) BEGIN
+   READ_SHORT ("%headoffset%" + (("%headcount%" - 1 ) * 0x28) + 0x1e) "count" ELSE 0
+   READ_SHORT ("%headoffset%" + (("%headcount%" - 1 ) * 0x28) + 0x20) "effectsindex" ELSE 0
+   WHILE ("%count%" >0) BEGIN
+ 	    WRITE_BYTE (0x0c +"%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 0     //Duration type = Instant/duration
+ 	    WRITE_LONG (0x0e + "%effectsoffset%" + (("%effectsindex%" + "%count%" - 1 )* 0x30)) 30   //Time = 30 seconds
+      SET "count" = ("%count%" -1)
+   END
+   SET "headcount" = "%headcount%" - 1
+END
+
+
+/* COPY_EXISTING ~delcia.cre~ ~override/tb#test.cre~ // eh eh  ;)
+	ADD_CRE_ITEM ~minhp1~ #0 #0 #0 ~none~ ~LRING RRING~ // I'm lazy
+	WRITE_ASCII SCRIPT_OVERRIDE ~~ #8
+	WRITE_ASCII SCRIPT_CLASS ~~ #8
+	WRITE_ASCII SCRIPT_RACE ~~ #8
+	WRITE_ASCII SCRIPT_GENERAL ~~ #8
+	WRITE_ASCII SCRIPT_DEFAULT ~~ #8
+	WRITE_ASCII DEATHVAR ~~ #32
+	WRITE_ASCII DIALOG ~~ #8
+	WRITE_BYTE  0x273 1   // class != innocent
+	WRITE_BYTE  0x270 255 // EA = Enemy   */
+
+COMPILE ~tb#quest/udmage/compile~

@@ -1,0 +1,618 @@
+// Script for a level 12 drow mage.
+// Script sequence:
+// Prepare (stone skins, create potion, etc.)
+// HP < 60%: charms the pit master and makes he open an hidden gate, from which will emerge:
+//   - Summon Monsters I  (60%)
+//   - Summon Monsters II (40%)
+// HP < 30%: extracts the mutated spiders he worked on (one can hide and backstab, the other casts Web and Poison)
+// Buffing/summoning spells
+// Cast 'n' attack
+// Removing buffs
+// Debilitating spells
+// Direct damage spells
+// Fallback attack
+
+// Spells:
+// 1st - 4 spells: Armor (already on), Magic Missile, Spook, charm (well... more or less... a scripted charm
+//																	to let Szordrin open the hidden gate
+// 2nd - 4 spells: Mirror Images, Horror, Melf Acid Arrow x2
+// 3rd - 4 spells: MMM, Flame Arrow x2, Remove Magic
+// 4th - 4 spells: Stoneskin (already on), Improved Invisibility, Spider Spawn x2
+// 5th - 4 spells: Lower Magic Resistance x2, Spell Immunity (Abj. o Div.), Animate Dead
+// 6th - 1 spell : Death Spell
+
+// contingency - StoneSkin when HP < 75%
+// Minor Sequencer - Mirror Image + Blur
+
+
+
+
+///////////////////////////////////////////
+// Long duration buffs are always present
+///////////////////////////////////////////
+
+IF
+	Global("prep","locals",0)
+THEN
+	RESPONSE #100
+		ApplySpell(Myself,WIZARD_STONE_SKIN)
+		ApplySpell(Myself,WIZARD_ARMOR)
+		Continue()
+END
+
+
+
+///////////////////////////////////////////
+// Healing/hiding potions
+///////////////////////////////////////////
+
+IF
+	Global("prep","locals",0)
+	RandomNum(2,1)
+THEN
+	RESPONSE #100
+		CreateItem("potn10",1,0,0) // Invisibility
+		CreateItem("potn52",2,0,0) // Greater Healing (27 HP)
+		Continue()
+END
+
+IF
+	Global("prep","locals",0)
+	RandomNum(2,2)
+THEN
+	RESPONSE #100
+		CreateItem("potn52",4,0,0) // Greater Healing (27 HP)
+		Continue()
+END
+
+
+
+///////////////////////////////////////////
+// Other useful potions
+///////////////////////////////////////////
+
+IF
+	Global("prep","locals",0)
+	RandomNumLT(4,3)
+THEN
+	RESPONSE #100
+		CreateItem("potn14",1,0,0) // Oil of Speed
+		Continue()
+END
+
+IF
+	Global("prep","locals",0)
+	!RandomNumLT(4,3)
+THEN
+	RESPONSE #100
+		CreateItem("potn24",1,0,0) // Defense
+		Continue()
+END
+
+IF
+	Global("prep","locals",0)
+	!RandomNum(6,3)
+THEN
+	RESPONSE #100
+		CreateItem("potn27",1,0,0) // FireBreath
+		Continue()
+END
+
+IF
+	Global("prep","locals",0)
+	RandomNum(6,3)
+THEN
+	RESPONSE #100
+		CreateItem("potn27",3,0,0) // 3x Fire Breath
+		Continue()
+END
+
+
+
+///////////////////////////////////////////
+// Set variables
+///////////////////////////////////////////
+
+IF
+	Global("prep","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobal("prep","locals",1)
+		SetGlobalTimer("action_interruptible","locals",1)
+		Continue()
+END
+
+
+
+///////////////////////////////////////////
+// Using Potions & Spells when low Hit Points
+///////////////////////////////////////////
+
+// Contingency
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	Global("cont","locals",0)
+	HPPercentLT(Myself,75)
+THEN
+	RESPONSE #100
+		ApplySpell(Myself,WIZARD_STONE_SKIN)
+		IncrementGlobal("badhealth","locals",1)
+		SetGlobal("cont","locals",1)
+		DisplayString(Myself,36936) // a contingency spell has been fired
+		DisplayString(Myself,29736) // Contingency - Stoneskin
+END
+
+// Invisibility
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HPPercentLT(Myself,50)
+	HasItem("potn10",Myself) // Invisibility
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SetGlobalTimer("action_interruptible","locals",6) // prevents attacking.
+		DisplayStringHead(Myself,@0)
+		UseItem("potn10",Myself)
+END
+
+// Healing
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HPPercentLT(Myself,50)
+	HasItem("potn52",Myself)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayStringHead(Myself,@0)
+		IncrementGlobal("badhealth","locals",1)
+		UseItem("potn52",Myself)
+END
+
+// Mirror Image when out of it
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	!StateCheck(Myself,STATE_MIRRORIMAGE)
+	Global("seq","locals",1)
+	HaveSpell(WIZARD_MIRROR_IMAGE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		Spell(Myself,WIZARD_MIRROR_IMAGE)
+		IncrementGlobal("badhealth","locals",1)
+END
+
+
+
+///////////////////////////////////////////
+// Special Mutated Spiders
+///////////////////////////////////////////
+
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	OR(2)                                 //  If you apply De Morgan, you'll see this mean
+		GlobalGT("badhealth","locals",0)  //
+		HPPercentLT(Myself,25)            //  HP < 25 OR BH > 1 OR (BH ==1 AND HP < 50)
+	OR(2)                                 //
+		GlobalGT("badhealth","locals",1)  //
+		HPPercentLT(Myself,50)            //
+	Global("figurine","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SetGlobal("figurine","locals",1)
+		DisplayStringHead(Myself,@1)
+		UseItem("tb#udfig",Myself)
+END
+
+
+
+///////////////////////////////////////////
+// Szordrin scene
+///////////////////////////////////////////
+
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	OR(2)
+		GlobalGT("badhealth","locals",0)
+		HPPercentLT(Myself,50)
+	Global("tb#szord","global",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SetGlobal("tb#szord","global",1)
+		DisplayStringHead(Myself,@2)
+		ReallyForceSpellRES("tb#udszo","uddrow04") // sets tb#szord to 2
+END
+
+IF
+	Global("tb#szord","global",2)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@3)
+		Wait(1)
+		ActionOverride("uddrow04",DisplayStringHead("uddrow04",@4))
+		Wait(1)
+		SetGlobal("tb#szord","global",3)
+		Continue()
+END
+
+IF
+	Global("tb#szord","global",3)
+THEN
+	RESPONSE #60
+		SetGlobal("tb#szord","global",4)
+		ApplySpellRES("tb#udsu1",Myself)
+	RESPONSE #40
+		SetGlobal("tb#szord","global",4)
+		ApplySpellRES("tb#udsu2",Myself)
+END
+
+
+
+
+///////////////////////////////////////////
+// First Buffing Sequence
+///////////////////////////////////////////
+
+// Start with Improved Invisibility
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(WIZARD_IMPROVED_INVISIBILITY)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SetGlobalTimer("action_interruptible","locals",12) // prevents attacking for the time of 2 spells.
+		Spell(Myself,WIZARD_IMPROVED_INVISIBILITY)
+		DisplayStringHead(Myself,@5)
+END
+
+// If still Impr. Invis. then immune to divination, else immune to abjur
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(WIZARD_SPELL_IMMUNITY_ABJURATION)
+	OR (2)
+		StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+		StateCheck(Myself,STATE_INVISIBLE)
+	RandomNumGT(20,7)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		RemoveSpell(WIZARD_SPELL_IMMUNITY_ABJURATION)
+		SpellNoDec(Myself,WIZARD_SPELL_IMMUNITY_DIVINATION)
+END
+
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(WIZARD_SPELL_IMMUNITY_ABJURATION)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		Spell(Myself,WIZARD_SPELL_IMMUNITY_ABJURATION)
+END
+
+// use the sequencer
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	Global("seq","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
+		ApplySpell(Myself,WIZARD_BLUR)
+		DisplayString(Myself,8635) // Minor Sequencer Fired
+		DisplayString(Myself,12016) // Blur
+		DisplayString(Myself,12018) // Mirror Image
+		SetGlobal("seq","locals",1)
+		SetGlobalTimer("buff","locals",12)
+END
+
+///////////////////////////////////////////
+// Other Buffs & Summons
+///////////////////////////////////////////
+
+// use the buffing potions
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HasItem("potn14",Myself)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		UseItem("potn14",Myself)
+		DisplayStringHead(Myself,@0)
+		SetGlobalTimer("buff","locals",12)
+END
+
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HasItem("potn24",Myself)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		UseItem("potn24",Myself)
+		DisplayStringHead(Myself,@0)
+		SetGlobalTimer("buff","locals",12)
+END
+
+// Animate Dead
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalTimerExpired("buff","locals")
+	HaveSpellRES("tb#udani")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellRES("tb#udani",Myself)
+		SetGlobalTimer("buff","locals",12)
+END
+
+// Melf Minute Meteors
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalTimerExpired("buff","locals")
+	HaveSpell(WIZARD_MELF_METEOR)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		Spell(Myself,WIZARD_MELF_METEOR)
+		SetGlobalTimer("buff","locals",12)
+END
+
+// Spider Spawn (2x)
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalTimerExpired("buff","locals")
+	HaveSpellRES("tb#udspi")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellRES("tb#udspi",Myself)
+		SetGlobalTimer("buff","locals",12)
+END
+
+
+
+///////////////////////////////////////////
+// Cast 'n' attack
+///////////////////////////////////////////
+
+IF
+	See(NearestEnemyOf(Myself))
+	False()
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	GlobalTimerExpired("action_interruptible","locals")
+	GlobalTimerNotExpired("cast","locals")
+	CheckStatLT(LastSeenBy(Myself),1,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("action_interruptible","locals",6)
+		AttackOneRound(LastSeenBy(Myself))
+END
+
+
+
+///////////////////////////////////////////
+// Anti-buff/summon spells
+///////////////////////////////////////////
+
+//Death Spell
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	OR(2)
+		Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+		Detect([GOODCUTOFF.0.0.0.0.ILLUSIONARY])
+	HaveSpell(WIZARD_DEATH_SPELL)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayStringHead(Myself,@7)
+		Spell(NearestEnemyOf(Myself),WIZARD_DEATH_SPELL)
+END
+
+IF
+	See(NearestEnemyOf(Myself))
+	False()
+THEN
+	RESPONSE #100
+END
+
+//Lower Resistance: once for sure, the second time on need
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	OR(2)
+		Global("lower","locals",0)
+		CheckStatGT(LastSeenBy(Myself),20,RESISTMAGIC)
+	Allegiance(LastSeenBy(Myself),GOODCUTOFF)
+	HaveSpell(WIZARD_LOWER_RESISTANCE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SetGlobal("lower","locals",1)
+		DisplayStringHead(Myself,@8)
+		Spell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+END
+
+// Remove Magic
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(2302) // Remove Magic, ignore the fucking dual standard
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		Spell(LastSeenBy(Myself),2302)
+END
+
+
+
+///////////////////////////////////////////
+// Targeting for spells
+///////////////////////////////////////////
+
+IF
+	See(NearestEnemyOf(Myself)) // fallback attack nearest
+	False()
+THEN
+	RESPONSE #100
+END
+
+
+
+///////////////////////////////////////////
+// Debilitating & Damaging Spells
+///////////////////////////////////////////
+
+// Spook
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(WIZARD_SPOOK)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayStringHead(Myself,@9)
+		Spell(LastSeenBy(Myself),WIZARD_SPOOK)
+END
+
+// Potion of Fire Breathing
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HasItem("potn27",Myself)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayStringHead(Myself,@10)
+		UseItem("potn27",LastSeenBy(Myself))
+END
+
+// Flame Arrow
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(WIZARD_FLAME_ARROW)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		Spell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+END
+
+// Melf Acid Arrow
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(WIZARD_MELF_ACID_ARROW)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		Spell(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+// Horror
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(WIZARD_HORROR)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		Spell(LastSeenBy(Myself),WIZARD_HORROR)
+END
+
+// Magic Missile
+IF
+	OR(2)
+		ActionListEmpty()
+		GlobalTimerNotExpired("action_interruptible","locals")
+	!GlobalTimerNotExpired("cast","locals")
+	HaveSpell(WIZARD_MAGIC_MISSILE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		Spell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+END
+
+
+
+///////////////////////////////////////////
+// Fallback attack
+///////////////////////////////////////////
+
+IF
+  ActionListEmpty()
+  GlobalTimerExpired("action_interruptible","locals")
+  GlobalTimerExpired("cast","locals")
+  CheckStatLT(LastSeenBy(Myself),1,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("action_interruptible","locals",6)
+    DisplayStringHead(Myself,@11)
+    AttackOneRound(LastSeenBy(Myself))
+END
+

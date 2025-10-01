@@ -1,0 +1,477 @@
+//5 4 4 3 2  (transmuter)
+// Magic Missile (3), Spook (2)
+// Mirr Imm, Blur, Individ_invis, Horror
+// Haste (72), Slow, FireBall (2)
+// StoneSkins, Telly field, Malison (108)
+// Chaos, Shadow Door
+
+//note: I do not use any type of utility or defence check.
+//
+//cause 1: lazyness.
+//cause 2: AI cycles.
+//cause 3: Orcs aren't exactly smart, anyway.
+
+//the typeofmage variable is to allow some slight co-ordination: Great Malion + Haste + Telly in the first round, that kind of things. This will work also, of course, in case there is only the mage 1; it will only take longer.
+
+IF
+  GlobalTimerExpired("tb#lotrrouted","global")
+THEN
+    RESPONSE #100
+    	     Kill(Myself)
+END
+
+IF
+  Global("active","locals",0)
+  OR(6)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+       Detect(NearestEnemyOf(Myself))
+       Global("tb#lotrgenactive","global",1)
+  Global("tb#lotrchosemage1","global",0)
+THEN                                           //necessary, he's the one with Greater Malison.
+    RESPONSE #100
+    	     SetGlobal("active","locals",1)
+  	     SetGlobal("tb#lotrchosemage1","global",1)
+  	     SetGlobal("typeofmage","locals",1)
+    	     DisplayStringHead(Myself,@11)
+    	     ApplySpell(Myself,WIZARD_STONE_SKIN)
+	     SetGlobal("magicmis","locals",3)
+	     SetGlobal("spook","locals",2)
+	     SetGlobal("mirrimm","locals",1)
+	     SetGlobal("horror","locals",1)
+	     SetGlobal("blur","locals",1)
+	     SetGlobal("indiv_invis","locals",1)
+	     SetGlobal("haste","locals",1)
+	     SetGlobal("slow","locals",1)
+	     SetGlobal("fireb","locals",2)
+	     SetGlobal("telly","locals",1)
+	     SetGlobal("malis","locals",1)
+	     SetGlobal("chaos","locals",1)
+	     SetGlobal("sdoor","locals",1)
+	     SetGlobalTimer("buff","locals",18)
+END
+
+IF
+  Global("active","locals",0)
+  OR(6)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+       Detect(NearestEnemyOf(Myself))
+       Global("tb#lotrgenactive","global",1)
+  Global("tb#lotrchosemage1","global",1)
+  Global("tb#lotrchosemage2","global",0)
+  !RandomNum(3,1)  //might decide to be a 3 instead
+THEN
+    RESPONSE #100
+    	     SetGlobal("active","locals",1)
+  	     SetGlobal("tb#lotrchosemage2","global",1)
+  	     SetGlobal("typeofmage","locals",2)
+    	     DisplayStringHead(Myself,@12)
+    	     ApplySpell(Myself,WIZARD_STONE_SKIN)
+	     SetGlobal("magicmis","locals",3)
+	     SetGlobal("spook","locals",2)
+	     SetGlobal("mirrimm","locals",1)
+	     SetGlobal("horror","locals",1)
+	     SetGlobal("blur","locals",1)
+	     SetGlobal("indiv_invis","locals",1)
+	     SetGlobal("haste","locals",1)
+	     SetGlobal("slow","locals",1)
+	     SetGlobal("fireb","locals",2)
+	     SetGlobal("telly","locals",1)
+	     SetGlobal("malis","locals",1)
+	     SetGlobal("chaos","locals",1)
+	     SetGlobal("sdoor","locals",1)
+	     SetGlobalTimer("buff","locals",18)
+END
+
+IF
+  Global("active","locals",0)
+  OR(6)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+       Detect(NearestEnemyOf(Myself))
+       Global("tb#lotrgenactive","global",1)
+  Global("tb#lotrchosemage1","global",1)
+  Global("tb#lotrchosemage2","global",1)
+THEN
+    RESPONSE #100
+    	     SetGlobal("active","locals",1)
+  	     SetGlobal("tb#lotrchosemage2","global",1)
+  	     SetGlobal("typeofmage","locals",3)
+    	     DisplayStringHead(Myself,@13)
+    	     ApplySpell(Myself,WIZARD_STONE_SKIN)
+	     SetGlobal("magicmis","locals",3)
+	     SetGlobal("spook","locals",2)
+	     SetGlobal("mirrimm","locals",1)
+	     SetGlobal("horror","locals",1)
+	     SetGlobal("blur","locals",1)
+	     SetGlobal("indiv_invis","locals",1)
+	     SetGlobal("haste","locals",1)
+	     SetGlobal("slow","locals",1)
+	     SetGlobal("fireb","locals",2)
+	     SetGlobal("telly","locals",1)
+	     SetGlobal("malis","locals",1)
+	     SetGlobal("chaos","locals",1)
+	     SetGlobal("sdoor","locals",1)
+	     SetGlobalTimer("buff","locals",18)
+END
+
+IF
+  Global("active","Locals",0)
+THEN
+    RESPONSE #100
+    	     NoAction()
+END
+
+IF
+  Die()
+THEN
+    RESPONSE #100
+    	     IncrementGlobal("tb#lotrkilled","global",1)
+END
+
+IF
+  Global("tb#lotrgenactive","global",1)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject("tb#lotrg")
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalTimerExpired("buff","locals")
+  Global("sdoor","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("buff","locals",12)
+    	     SpellNoDec(Myself,WIZARD_SHADOW_DOOR)
+    	     SetGlobal("sdoor","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalTimerExpired("buff","locals")
+  Global("mirrimm","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("buff","locals",12)
+    	     SpellNoDec(Myself,WIZARD_MIRROR_IMAGE)
+    	     SetGlobal("mirrimm","locals",0)
+END
+
+IF
+  HPPercentLT(Myself,25)
+  HasItem("potn52",Myself)
+  !GlobalTimerNotExpired("cast","locals")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     UseItem("potn52",Myself)
+    	     Continue()
+END
+
+IF
+  HPPercentLT(Myself,25)
+  !HasItem("Potn52",Myself)
+  !GlobalTimerNotExpired("shouted1","locals")
+THEN
+    RESPONSE #100
+    	     Shout(4)
+    	     SetGlobal("tb#lotrgivepotion","global",1)
+    	     DisplayStringHead(Myself,@14)
+    	     SetGlobalTimer("shouted1","locals",12)
+    	     Continue()
+END
+
+
+IF
+  OR(2)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],6)
+  Global("tb#lotrgivepotion","global",1)
+  HasItem("potn52",Myself)
+  HPPercentGT(Myself,35)
+THEN
+    RESPONSE #100
+    	     SetGlobal("tb#lotrgivePotion","global",0)
+	     DisplayStringHead(Myself,@8)
+    	     GiveItem("potn52",LastHeardBy(Myself))
+    	     Continue()
+END
+
+
+IF
+  HPPercentLT(Myself,50)
+  HPPercentGT(Myself,25)
+  !GlobalTimerNotExpired("shouted","locals")
+THEN
+    RESPONSE #100
+    	     Shout(3)
+	     DisplayStringHead(Myself,@15)
+    	     SetGlobalTimer("shouted","locals",12)
+    	     Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalTimerExpired("buff","locals")
+  Global("blur","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("buff","locals",12)
+    	     SpellNoDec(Myself,WIZARD_BLUR)
+    	     SetGlobal("blur","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Detect([GOODCUTOFF])
+  !See([GOODCUTOFF])
+  !GlobalTimerNotExpired("tb#lotrindiv_invis","global")
+  Global("indiv_invis","locals",1)
+  OR(2)
+       !Global("typeofmage","locals",1)
+       !Detect("tb#lotrm")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("tb#lotrindiv_invis","global",6)
+    	     SpellNoDec(Myself,WIZARD_DETECT_INVISIBILITY)
+  	     SetGlobal("indiv_invis","locals",0)
+END
+
+IF
+  OR(4)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+  Range(LastAttackerOf(Myself),4)
+THEN
+    RESPONSE #50
+    	     RunAwayFrom(LastSeenBy(Myself),30)
+END
+
+IF
+  OR(3)
+      See(NearestEnemyOfType([GOODCUTOFF]))
+      See(NearestEnemyOfType([PC]))
+      See(LastAttackerOf(Myself))
+  !Range(LastSeenBy(Myself),4)
+THEN
+    RESPONSE #100
+    	     Continue()
+END
+
+//round 1; all mages are used only once, except mage3.
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("malis","locals",1)
+  !See("tb#lotr2")  //he will whip out a remove magic, so a small wait for extra insurance
+  Global("typeofmage","locals",1)
+  !GlobalTimerNotExpired("tb#lotrgmal","global")
+THEN
+    RESPONSE #100
+    	     Wait(1)
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("malis","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_GREATER_MALISON)
+    	     SetGlobalTimer("tb#lotrgmal","global",108)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("malis","locals",1)
+  !See("tb#lotr2")  //he will whip out a remove magic, so a small wait
+  Global("typeofmage","locals",1)
+  !GlobalTimerNotExpired("tb#lotrgmal","global")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("malis","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_GREATER_MALISON)
+    	     SetGlobalTimer("tb#lotrgmal","global",108)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("tb#lotrhaste","global",0)
+  Global("haste","locals",1)
+  Global("typeofmage","locals",2)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("haste","locals",0)
+    	     SpellNoDec(Myself,WIZARD_HASTE)
+    	     SetGlobal("tb#lotrhaste","global",1)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("telly","locals",1)
+  Global("typeofmage","locals",3)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("telly","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_TELEPORT_FIELD)
+END
+
+//round 2.
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("slow","locals",1)
+  Global("typeofmage","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("slow","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_SLOW)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("chaos","locals",1)
+  Global("typeofmage","locals",2)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("chaos","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_CHAOS)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalTimerNotExpired("tb#lotrmal","global")  // IMHO, horror needs the save penalty, while Slow and Chaos, both at -4, work even without Greater Malison.
+  Global("horror","locals",1)
+  Global("typeofmage","locals",3)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("horror","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_HORROR)
+END
+
+// at most I'll lose some spells. The world is not perfect and, hey, in a war you don't cast every spell every fight!
+// the following are always used, of course ;->
+
+//the spells above, if not used and possibly useful (no double haste...)
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("tb#lotrhaste","global",0)
+  Global("haste","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("haste","locals",0)
+    	     SpellNoDec(Myself,WIZARD_HASTE)
+    	     SetGlobal("tb#lotrhaste","global",1)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("telly","locals",1)
+  RandomNum(3,1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("telly","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_TELEPORT_FIELD)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("slow","locals",1)
+  RandomNum(3,1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("slow","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_SLOW)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Global("chaos","locals",1)
+  RandomNum(2,1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("chaos","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_CHAOS)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalTimerNotExpired("tb#lotrmal","global")
+  Global("horror","locals",1)
+  RandomNum(4,1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobal("horror","locals",0)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_HORROR)
+END
+
+//other spells
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("fireb","locals",0)
+  Range(TenthNearest([EVILCUTOFF]),6)
+  !Range(LastSeenBy(Myself),15)
+  !RandomNum(3,1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("fireb","locals",-1)
+    	     SpellNoDec(Myself,WIZARD_FIREBALL)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("spook","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("spook","locals",-1)
+    	     SpellNoDec(Myself,WIZARD_SPOOK)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("magicmis","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("magicmis","locals",-1)
+    	     SpellNoDec(Myself,WIZARD_MAGIC_MISSILE)
+END
+
+IF
+  !Range(LastSeenBy,4)
+  ActionListEmpty()
+THEN
+    RESPONSE #100
+    	     EquipRanged()
+    	     AttackOneRound(LastSeenBy(Myself))
+END

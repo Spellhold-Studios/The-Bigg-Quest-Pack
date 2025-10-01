@@ -1,0 +1,96 @@
+IF
+  AttackedBy([GOODCUTOFF],DEFAULT)
+  !Allegiance(Myself,ENEMY)
+  !StateCheck(LastAttackerOf,STATE_CHARMED)
+  !StateCheck(LastAttackerOf,STATE_BERSERK)
+  !StateCheck(LastAttackerOf,STATE_CONFUSED)
+  Global("tb#lotrkilledamn","global",0)
+THEN
+  RESPONSE #100
+           Enemy()
+           DisplayStringHead(Myself,@1)
+	   SetGlobal("tb#lotrkilledamn","global",1)
+END
+
+IF
+  Global("tb#lotrkilledamn","global",1)
+  !Detect("tb#lotrc")
+THEN
+    RESPONSE #100
+    	     Wait(2)
+    	     DisplayStringHead(Myself,@1)
+	   SetGlobal("tb#lotrkilledamn","global",2)
+END
+
+IF
+  Global("tb#lotrkilledamn","global",2)
+THEN
+    RESPONSE #100
+    	     Wait(2)
+    	     DisplayStringHead(Myself,@10)
+    	     Wait(2)
+    	     DestroySelf()
+END
+
+IF
+  ActionListEmpty()
+  HotKey(B)
+  Global("spelseq","locals",0)
+THEN
+    RESPONSE #100
+    	     ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
+    	     ApplySpell(Myself,WIZARD_IMPROVED_INVISIBILITY)
+    	     ApplySpell(Myself,WIZARD_STONE_SKIN)
+    	     SetGlobal("spelseq","locals",1)
+END
+
+IF
+  Global("prep","locals",0)
+THEN
+    RESPONSE #100
+    	     ApplySpell(Myself,WIZARD_STONE_SKIN)
+    	     DisplayStringHead(Myself,"Press B to activate my spell sequencer, which contains StoneSkin, Improved Invisibility and Mirror Images.")
+    	     SetGlobal("prep","locals",1)
+    	     Ally()
+END
+
+IF
+  !See([PC])
+  !See(NearestEnemyOf(Myself))
+  Delay(6)
+THEN
+    RESPONSE #100
+    	     MoveToObject(Player1)
+    	     DisplayStringHead(Myself,"<CHARNAME> Don't run! We're here to help!")
+END
+
+IF
+  HPPercentLT(Myself,25)
+  !GlobalTimerNotExpired("shouted1","locals")
+  ActionListEmpty()
+THEN
+    RESPONSE #100
+    	     DisplayStringHead(Myself,"Help Me, quick! I'm going to die!")
+    	     SetGlobalTimer("shouted1","locals",6)
+    	     PauseGame()
+END
+
+IF
+  HPPercentLT(Myself,50)
+  HPPercentGT(Myself,25)
+  !GlobalTimerNotExpired("shouted","locals")
+  ActionListEmpty()
+THEN
+    RESPONSE #100
+	     DisplayStringHead(Myself,"Help!")
+    	     SetGlobalTimer("shouted","locals",12)
+END
+
+
+IF
+  ActionListEmpty()
+THEN
+    RESPONSE #100
+             AttackOneRound(NearestEnemyOf)
+END
+

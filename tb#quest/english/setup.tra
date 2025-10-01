@@ -1,0 +1,52 @@
+@60      = ~You seem to already have this component installed, skipping...~
+
+// Note to translators: ignore from here...
+@1600    = ~The curse of Mprolla the spammer~
+@1601    = ~Mike Prolla~
+@1602    = ~Royalty We~
+@1700    = ~The curse of Mprolla the cheater~
+@1701    = ~You need The curse of Mprolla the Spammer~
+@1702	 = ~The Curse of Mprolla is present, good!~
+// ... Until here
+// The above component makes no sense if you don't know Mprilla, which requires you to know English  :)
+
+@2000    = ~A large battle~
+@2002    = ~Maniar~
+@2003    = ~Ogre Tenant~
+@2004    = ~Ered the Mad Mage~
+@2005    = ~Arker, Shaman Tenant~
+@2006    = ~Orc Tenant~
+@2007    = ~General Argor~
+@2008    = ~Lieutenant Beldor~
+@2009    = ~Shamanic Mage Gobrog~
+@2010   = ~Gobrog's Transformation~
+@2011   = ~Gobrog's Transformation
+
+Gobrog, a clearly overintelligent cleric/mage orc, was able to develop his own form of Tenser's most famuous spell. It is slightly weaker, but it allows the caster to cast spells.
+
+DIFFERENCES:
+Doesn't receive the 2 thac0 bonus. Thac0 still gets to fighter level, though.
+HP get only a 150% bonus, instead of a 200% one.
+Can cast spells while the spell is in action, with some slight drawbacks.
+Spellcasting failure chance is increased by 15%, casting time increased by 2, and, finally, you'll lose a memorized spell.
+
+NET EFFECTS:
+Gorbog's transformation is a sight guaranteed to astound any creature not aware of its power.  For when the wizard casts the spell, he undergoes a startling transformation.  The size and strength of the wizard increase to heroic preportions, so he becomes a formidable fighting machine.  The spell causes the caster to become a berserk fighter.
+
+The wizard's hit points increase to 150% of their actual value, and all damage he sustains comes first from the magical points gained.  The armor class of the wizard is 4 better than he possessed prior casting the spell. All attacks are as a fighter of the same level as the wizard (i.e. the wizard uses the combat values normally reserved for fighters). As well each successful hit in combat inflicts an additional 2 points of damage. The effect lasts for the duration or until dispelled.  NOTE: This spell does not give the caster any extra attacks.
+Can cast spells while the spell is in action, with some slight drawbacks.
+Spellcasting failure chance is increased by 15%, casting time increased by 2, and, finally, you'll lose a memorized spell.~
+
+@3000 = ~Underdark Mage Duel~
+@3001 = ~Kix~
+@3002 = ~Thix~
+@3003 = ~Laniz~
+@3004 = ~Spider Figurine~
+@3005 = ~This obsidiane figurine represents a black spider; you've seen the nameless Drow Wizard you've challenged use it to summon a couple of mutated spiders, but you can't figure out how to replicate the effect.~
+@3006 = ~This obsidiane figurine represents a black spider; you've seen Laniz use it to summon a couple of mutated spiders with special abilities. To use it, simply toss it in the ground saying the command word. The figurine will summon a pair of mutated spiders, Kix and Thix. The spiders will obey its master's commands for the duration of the spell or until slain.  After thirty seconds, regardless of whether the spiders lived or died, the figurine returns.  It takes a day to recharge the figurine.
+
+STATISTICS
+
+Special Abilities: Summons Kix and Thix for five minutes, once each day. Kix can cast Invisibility every two rounds and backstab like a level 5 thief, while Thix can cast Poison every two rounds and Web every ten (= the spell duration).
+Not Usable By:
+ Wizard Slayer~

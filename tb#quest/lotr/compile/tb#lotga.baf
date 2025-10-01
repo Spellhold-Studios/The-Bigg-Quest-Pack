@@ -1,0 +1,141 @@
+IF
+  GlobalTimerExpired("tb#lotrrouted","global")
+THEN
+    RESPONSE #100
+    	     Kill(Myself)
+END
+
+IF
+  Global("active","locals",0)
+  OR(6)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+       Detect(NearestEnemyOf(Myself))
+       Global("tb#lotrgenactive","global",1)
+THEN
+    RESPONSE #100
+    	     SetGlobal("active","locals",1)
+    	     DisplayStringHead(Myself,@5)
+END
+
+IF
+  Global("active","Locals",0)
+THEN
+    RESPONSE #100
+    	     NoAction()
+END
+
+IF
+  Die()
+THEN
+    RESPONSE #100
+    	     IncrementGlobal("tb#lotrkilled","global",1)
+END
+
+IF
+  Global("tb#lotrgenactive","global",1)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject("tb#lotrg")
+END
+
+IF
+  HPPercentLT(Myself,25)
+  HasItem("potn52",Myself)
+  !GlobalTimerNotExpired("cast","locals")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     UseItem("potn52",Myself)
+    	     Continue()
+END
+
+IF
+  HPPercentLT(Myself,25)
+  !HasItem("Potn52",Myself)
+  !GlobalTimerNotExpired("shouted1","locals")
+THEN
+    RESPONSE #100
+    	     Shout(4)
+    	     SetGlobal("tb#lotrgivepotion","global",1)
+    	     DisplayStringHead(Myself,@6)
+    	     SetGlobalTimer("shouted1","locals",12)
+    	     Continue()
+END
+
+
+IF
+  OR(2)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],6)
+  Global("tb#lotrgivepotion","global",1)
+  HasItem("potn52",Myself)
+  HPPercentGT(Myself,35)
+THEN
+    RESPONSE #100
+    	     SetGlobal("tb#lotrgivePotion","global",0)
+	     DisplayStringHead(Myself,@8)
+    	     GiveItem("potn52",LastHeardBy(Myself))
+    	     Continue()
+END
+
+
+IF
+  HPPercentLT(Myself,50)
+  HPPercentGT(Myself,25)
+  !GlobalTimerNotExpired("shouted","locals")
+THEN
+    RESPONSE #100
+    	     Shout(3)
+	     DisplayStringHead(Myself,@4)
+    	     SetGlobalTimer("shouted","locals",12)
+    	     Continue()
+END
+
+IF
+  OR(4)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+  Range(LastAttackerOf(Myself),4)
+THEN
+    RESPONSE #50
+    	     RunAwayFrom(LastSeenBy(Myself),30)
+    RESPONSE #50
+	     EquipMostDamagingMelee()
+	     AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+  OR(5)
+       True()
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  OR(4)
+      See(NearestEnemyOfType([GOODCUTOFF]))
+      See(NearestEnemyOfType([PC]))
+      See(LastAttackerOf(LastHeardBy(Myself)))
+      See(LastAttackerOf(Myself))
+  !Range(LastSeenBy(Myself),4)
+THEN
+    RESPONSE #100
+    	     EquipRanged()
+    	     AttackOneRound(LastSeenBy)
+END
+
+
+
+

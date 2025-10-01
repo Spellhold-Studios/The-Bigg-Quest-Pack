@@ -1,0 +1,516 @@
+IF
+	GlobalTimerExpired("tb#lotrrouted","global")
+THEN
+	RESPONSE #100
+		Kill(Myself)
+END
+
+IF
+	Global("active","locals",0)
+	OR(4)
+		Heard([EVILCUTOFF],5)
+		Heard([EVILCUTOFF],6)
+		Detect(NearestEnemyOf(Myself))
+		Global("tb#lotrgenactive","global",1)
+THEN
+	RESPONSE #100
+		SetGlobal("active","locals",1)
+		DisplayStringHead(Myself,@34)
+		Wait(2)
+		DisplayStringHead(Myself,@35)
+		SmallWait(2)
+		ApplySpell(Myself,WIZARD_BLUR)
+		ApplySpell(Myself,WIZARD_STONE_SKIN)
+		ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
+		ApplySpell(Myself,2222)
+		ApplySpell(Myself,2723)
+		ApplySpell(Myself,WIZARD_MELF_METEOR)
+		ApplySpell(Myself,WIZARD_SIMULACRUM)
+		ApplySpell(Myself,WIZARD_SPIDER_SPAWN)
+		ApplySpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+		ApplySpell("tb#lotrg",WIZARD_IMPROVED_HASTE)
+		ActionOverride([EVILCUTOFF.0.0.0.0.ILLUSIONARY],ChangeAIScript("tb#lotrm",OVERRIDE))
+		SetGlobal("nhr","locals",6)
+		SetGlobal("horror","locals",1)
+		SetGlobal("melf","locals",2)
+		SetGlobal("flame_a","locals",2)
+		SetGlobal("fireb","locals",2)
+		SetGlobal("s_thrust","locals",1)
+		SetGlobal("ssk","locals",1)
+		SetGlobal("poly_other","locals",2)
+		SetGlobal("Contagion","locals",1)
+		SetGlobal("Breach","locals",2)
+		SetGlobal("animdead","locals",1)
+		SetGlobal("truesight","locals",1)
+		SetGlobal("pfmw","locals",1)
+		SetGlobal("prism","locals",2)
+		SetGlobal("sphere_o_chaos","locals",1)
+		SetGlobal("bigby","locals",2)
+		SetGlobal("dfield","locals",1)
+		SetGlobal("wstrike","locals",1)
+		SetGlobalTimer("pfmw_t","locals",24)
+END
+
+IF
+	Global("active","Locals",0)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	Die()
+THEN
+	RESPONSE #100
+		IncrementGlobal("tb#lotrkilled","global",1)
+END
+
+IF
+	HPPercentLT(Myself,10)
+	Global("final_gift","locals",0)
+	ActionListEmpty()
+THEN
+	RESPONSE #100
+		SetGlobal("final_gift","locals",1)
+		DisplayString(Myself,@36)
+		ReallyForceSpell(Myself,WIZARD_SUN_FIRE)
+		ReallyForceSpell(Myself,WIZARD_SUN_FIRE)
+		ReallyForceSpell(Myself,WIZARD_SUN_FIRE)
+		DisplayStringHead(Myself,@37)
+		Wait(2)
+		DisplayStringHead(Myself,@38)
+		ReallyForceSpell(Myself,WIZARD_DELAYED_BLAST_FIREBALL)
+		Kill(Myself)
+END
+
+IF
+	Global("tb#lotrgenactive","global",1)
+	!See([PC])
+THEN
+	RESPONSE #100
+		MoveToObject("tb#lotrg")
+END
+
+IF
+	HPPercentLT(Myself,25)
+	HasItem("potn52",Myself)
+	!GlobalTimerNotExpired("cast","locals")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		UseItem("potn52",Myself)
+		Continue()
+END
+
+IF
+	HPPercentLT(Myself,25)
+	!HasItem("Potn52",Myself)
+	!GlobalTimerNotExpired("shouted1","locals")
+THEN
+	RESPONSE #100
+		Shout(6)
+		SetGlobal("tb#lotrgivepotion","global",1)
+		DisplayStringHead(Myself,@6)
+		SetGlobalTimer("shouted1","locals",12)
+		Continue()
+END
+
+IF
+	OR(2)
+		!GlobalTimerNotExpired("cast","locals")
+		GlobalTimerNotExpired("alacre","locals")
+	GlobalGT("nhr","locals",0)
+	!GlobalTimerNotExpired("timestop","Locals")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		SpellNoDec(Myself,WIZARD_TIME_STOP)
+		SetGlobalTimer("timestop","locals",24)
+		IncrementGlobal("nhr","locals",-1)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	!GlobalTimerNotExpired("alacre","locals")
+	GlobalGT("nhr","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		SpellNoDec(Myself,WIZARD_IMPROVED_ALUCRITY)
+		SetGlobalTimer("alacre","locals",18)
+		IncrementGlobal("nhr","locals",-1)
+END
+
+IF
+	!GlobalTimerNotExpired("pfmw_t","locals")
+	OR(2)
+		!GlobalTimerNotExpired("cast","locals")
+		GlobalTimerNotExpired("alacre","locals")
+	GlobalGT("pfmw","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellNoDec(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+		IncrementGlobal("pfmw","locals",-1)
+		SetGlobalTimer("pfmw_t","locals",24)
+END
+
+IF
+	!GlobalTimerNotExpired("pfmw_t","locals")
+	OR(2)
+		!GlobalTimerNotExpired("cast","locals")
+		GlobalTimerNotExpired("alacre","locals")
+	GlobalGT("nhr","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself) 
+		SpellNoDec(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+		SetGlobalTimer("pfmw_t","locals",24)
+		IncrementGlobal("nhr","locals",-1)
+END
+
+IF
+	CheckStatLT(Myself,1,STONESKINS)
+	GlobalTimerExpired("cast","locals")
+	GlobalGT("ssk","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellNoDec(Myself,WIZARD_STONE_SKIN)
+		IncrementGlobal("ssk","locals",-1)
+END
+
+IF
+	Heard([EVILCUTOFF],6)
+	Global("tb#lotrgivepotion","global",1)
+	HasItem("potn52",Myself)
+	HPPercentGT(Myself,35)
+THEN
+	RESPONSE #100
+		SetGlobal("tb#lotrgivePotion","global",0)
+		DisplayStringHead(Myself,@8)
+		GiveItem("potn52",LastHeardBy(Myself))
+		Continue()
+END
+
+IF
+	HPPercentLT(Myself,50)
+	HPPercentGT(Myself,25)
+	!GlobalTimerNotExpired("shouted","locals")
+THEN
+	RESPONSE #100
+		Shout(5)
+		DisplayStringHead(Myself,@4)
+		SetGlobalTimer("shouted","locals",12)
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	Detect([GOODCUTOFF])
+	!See([GOODCUTOFF])
+	!GlobalTimerNotExpired("tb#lotrindiv_invis","global")
+	Global("truesight","locals",1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SetGlobalTimer("tb#lotrindiv_invis","global",60)
+		SpellNoDec(Myself,WIZARD_TRUE_SIGHT)
+		SetGlobal("truesight","locals",0)
+END
+
+IF
+	OR(2)
+		Heard([EVILCUTOFF],5)
+		Heard([EVILCUTOFF],6)
+	!See([PC])
+THEN
+	RESPONSE #100
+		MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+	Range(LastAttackerOf(Myself),4)
+THEN
+	RESPONSE #50
+		RunAwayFrom(LastSeenBy(Myself),30)
+END
+
+IF
+	See([PC.0.0.MAGE_ALL])
+	OR(2)
+		!GlobalTimerNotExpired("cast","locals")
+		GlobalTimerNotExpired("alacre","locals")
+	Global("s_thrust","locals",1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellNoDec(LastSeenBy,WIZARD_SPELL_THRUST)
+		SetGlobal("s_thrust","locals",0)
+		Wait(1)
+		DisplayStringHead(Myself,@40)
+END
+
+IF
+	See([PC.0.0.MAGE_ALL])
+	OR(2)
+		!GlobalTimerNotExpired("cast","locals")
+		GlobalTimerNotExpired("alacre","locals")
+	GlobalGT("nhr","locals",0)
+	Global("specialshow","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		SpellNoDec(LastSeenBy,WIZARD_SPELL_STRIKE)
+		DisplayStringHead(Myself,@41)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow","locals",1)
+END
+
+IF
+	See([PC.0.0.MAGE_ALL])
+	OR(2)
+		!GlobalTimerNotExpired("cast","locals")
+		GlobalTimerNotExpired("alacre","locals")
+	Global("wstrike","locals",1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellNoDecRES("ca#wstr",LastSeenBy) 
+		SetGlobal("wstrike","locals",0)
+END
+
+IF
+	Range(NearestEnemyOf(Myself),8)
+	!GlobalTimerNotExpired("cast","locals")
+	!GlobalTimerNotExpired("alacre","locals")
+	Global("dfield","locals",1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellNoDecRES("tg#dthf",Myself)
+		SetGlobal("dfield","locals",0)
+END
+
+IF
+	Range(NearestEnemyOf,4)
+THEN
+	RESPONSE #100
+		RunAwayFrom(NearestEnemyOf,30)
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	OR(2)
+		!GlobalTimerNotExpired("cast","locals")
+		GlobalTimerNotExpired("alacre","locals")
+	GlobalGT("nhr","locals",0)
+	Global("specialshow1","Locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH01",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH03",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH04",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH08",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH12",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH17",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH18",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH26",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		DisplayString(Myself,@39)
+		ApplySpellRES("tb#surge",Myself)
+		DisplayStringHead(Myself,@42)
+		SpellNoDecRES("SPWISH32",Myself)
+		IncrementGlobal("nhr","locals",-1)
+		SetGlobal("specialshow1","locals",1)
+END
+
+IF
+	OR(3)
+		See(NearestEnemyOfType([GOODCUTOFF]))
+		See(NearestEnemyOfType([PC]))
+		See(LastAttackerOf(Myself))
+	!Range(LastSeenBy(Myself),4)
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("bigby","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("bigby","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_BIGBYS_CLENCHED_FIST)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("sphere_o_chaos","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("Sphere_o_chaos","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_SPHERE_OF_CHAOS)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("prism","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("prism","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_PRISMATIC_SPRAY)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("breach","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("breach","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_CONE_OF_COLD)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("contagion","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("contagion","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_CONTAGION)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("poly_other","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("poly_other","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_POLYMORPH_OTHER)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("fireb","locals",0)
+	!Range(LastSeenBy(Myself),15)
+	!RandomNum(3,1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("fireb","locals",-1)
+		SpellNoDec(Myself,WIZARD_FIREBALL)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("flame_a","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("flame_a","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("horror","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("horror","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_HORROR)
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	GlobalGT("melf","locals",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		IncrementGlobal("melf","locals",-1)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+	!Range(LastSeenBy,4)
+	!GlobalTimerNotExpired("alacre","locals")
+	ActionListEmpty()
+THEN
+	RESPONSE #100
+		EquipRanged()
+		AttackOneRound(LastSeenBy(Myself))
+END
+
+

@@ -1,0 +1,26 @@
+IF
+	Global("tb#udduelstart","GLOBAL",7)
+THEN
+	RESPONSE #100
+        CreateCreature("tb#udrow",[2028.636],4)
+		ActionOverride("tb#uddrow",Enemy())
+		SetGlobal("tb#udduelstart","GLOBAL",8)
+END
+
+IF
+	Dead("tb#uddrow")
+	CombatCounterLT(1)
+	Global("tb#udduelopenedgate","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("tb#udduelopenedgate","GLOBAL",1)
+		Unlock("Gate1")
+		OpenDoor("Gate1")
+		ActionOverride(Player1,MakeUnselectable(0))
+		ActionOverride(Player2,MakeUnselectable(0))
+		ActionOverride(Player3,MakeUnselectable(0))
+		ActionOverride(Player4,MakeUnselectable(0))
+		ActionOverride(Player5,MakeUnselectable(0))
+		ActionOverride(Player6,MakeUnselectable(0))
+END
+

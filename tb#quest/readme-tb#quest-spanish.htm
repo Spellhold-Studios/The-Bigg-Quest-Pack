@@ -1,0 +1,597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<script type="text/javascript">
+<!--
+function mail(text)
+    {
+    bits=text.split("###");
+    document.write("<a href=\"mailto:"+bits[0]+"@"+bits[2]+"\">"+bits[4]+"</a>");
+    }
+-->
+</script>
+
+<style type="text/css">
+/*<![CDATA[*/
+<!-- 
+  body {
+    cursor: default;
+    text-align: center;
+    color: #000;
+    background-color: #A1A1A1;
+    margin-top: 20px;
+    margin-bottom: -20px;
+    xwidth: 98%;
+  }
+  
+  #headerdiv-top {
+    text-align: center;
+    font-family: Verdana, Trebuchet MS, Arial, serif;
+    font-size: 200%;
+    font-weight: bold;
+    line-height: 73%;
+    color #020F1D;
+    background-color: #fff;
+    padding: 15px 0px 15px 0px;
+    margin: 0px auto;
+    border-left: solid 1px #532529;
+    border-right: solid 1px #532529;
+    border-bottom: solid 1px #532529;
+    border-top: solid 3px #532529;
+    width: 90%;
+    position: relative;
+    display: block;
+  }
+  
+  #headerdiv-middle {
+    text-align: center;
+    font: italic 75% Verdana, Trebuchet MS, Arial, serif;
+    color: #bbb;
+    font-weight: normal;
+    background-color: #F1F1F1;
+    width: 90%;
+    border-left: solid 1px #532529;
+    border-right: solid 1px #532529;
+    margin: 0px auto;
+    padding: 10px 0px 10px 0px;
+    position: relative;
+    display: block;
+  }
+  
+  .headerdiv-line {
+    color: #532529;
+  }
+  
+  #headerdiv-middle a:link, #headerdiv-middle a:visited {
+    text-decoration: underline;
+    background-color: transparent;
+    color: #000;
+  }
+  
+  #headerdiv-middle a:focus, #headerdiv-middle a:hover {
+    text-decoration: underline;
+    color: #532539;
+  }
+  
+  #headerdiv-middle a:active {
+    color: #000;
+    text-decoration: line-through;
+    border: none;
+  }
+
+  #headerdiv-bottom {
+    text-align: center;
+    font: 83% Verdana, Trebuchet MS, Arial, serif;
+    color: #aaa;
+    padding: 8px 0px 8px 0px;
+    margin: 0px auto;
+    border-left: solid 1px #532529;
+    border-right: solid 1px #532529;
+    border-bottom: solid 3px #532529;
+    border-top: solid 1px #bbb;
+    width: 90%;
+    background-color: #F1F1F1;
+    position: relative;
+    display: block;
+  }
+
+  #maindiv {
+    text-align: center;
+    font-family: Verdana, Trebuchet MS, Arial, serif;
+  }
+  
+  #maindiv div {
+    background-color: #F1F1F1;
+    color: #020F1D;
+    padding: 11px 0px 25px 0px;
+    margin: 50px auto;
+    border-width: 1px 1px 4px 10px;
+    border-style: solid;
+    border-color: #532529;
+    width: 80%;
+    position: relative;
+    display: block;
+  }
+  
+  #maindiv div::before {
+    content: counter(kman, lower-roman);
+    counter-increment: kman;
+    font-size: 100%;
+    font-weight: bold;
+    color: #fff;
+    background-color: #532529;
+    width: 42px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: block;
+  }
+  
+  #maindiv p {
+    font-size: 83%;
+    font-style: normal;
+    text-align: justify;
+    line-height: 160%;
+    padding: 0px;
+    margin: 10px auto;
+    width: 90%;
+    display: block;
+  }
+  
+  #headerdiv-bottom a:link, #headerdiv-bottom a:visited {
+    font-weight: bold;
+    text-decoration: none;
+    background-color: transparent;
+    color: #000;
+  }
+  
+  #headerdiv-bottom a:focus, #headerdiv-bottom a:hover {
+    text-decoration: none;
+    color: #532539;
+  }
+  
+  #headerdiv-bottom a:active {
+    color: #000;
+    text-decoration: line-through;
+    border: none;
+  }
+  
+  #maindiv address a:link, #maindiv address a:visited {
+    font-weight: bold;
+    text-decoration: underline;
+    background-color: transparent;
+    color: #fff;
+  }
+  
+  #maindiv address a:focus, #maindiv address a:hover {
+    text-decoration: underline;
+    color: #532539;
+  }
+  
+  #maindiv address a:active {
+    color: #fff;
+    text-decoration: line-through;
+    border: none;
+  }
+  
+  #maindiv address {
+    font-size: 70%;
+    font-style: normal;
+    text-decoration: none;
+    color: #959FAA;
+    background-color: #532529;
+    padding: 3px 0px 0px;
+    margin: 0px;
+    width: 100%;
+    position: absolute;
+    bottom: -1px;
+    left: 0px;
+    display: block;
+    text-align: right;
+  }
+
+  .address-footer-1 {
+    letter-spacing: 0.2em;
+  }
+  
+  h4 {
+    font-family: Verdana, Trebuchet MS, Arial, serif;
+    font-size: 150%;
+    text-align: left;
+    text-indent: 30px;
+    padding: 0px 0px 0px 0px;
+    border-bottom: dotted 2px #ddd;
+  }
+
+  h5 {
+    font-family: Verdana, Trebuchet MS, Arial, serif;
+    font-size: 120%;
+    text-align: left;
+    text-indent: 30px;
+    padding: 0px 0px 0px 0px;
+  }
+
+  h4::first-letter {
+    color: #532529;
+    background-color: transparent;
+  }
+  
+  body h1, body #maindiv h3, h1+h2, body #maindiv h4 {
+  font-weight: bold;
+  display: block;
+  }
+  
+  #maindiv .divimp {
+    font-size: 80%;
+    font-family: Verdana;
+    text-align: left;
+    background-color: #E1E1E1;
+    border-top: solid 1px #bbb;
+    border-bottom: solid 1px #bbb;
+    border-left: solid 6px #bbb;
+    border-right: solid 6px #bbb;
+    padding: 10px;
+    margin: 20px auto;
+    line-height: 150%;
+  }
+  
+  #maindiv .divimp::before {
+    display: none;
+  }
+  
+  #maindiv .divimp p {
+    font-size: 100%;
+    text-indent: 0px;
+  } 
+  
+  .list-numbered {
+    list-style-type: decimal;
+    margin-top: 0px;
+  }
+  
+  #headerdiv-top-fw {
+    font-size: 40%;
+    color: #532529;
+    margin: 0px;
+		padding-top: 9px;
+		display: block;
+  }
+  
+  .faq-q {
+    font-weight: bold;
+    font-style: italic;
+    text-align: justify;
+  }
+    
+  .faq-a {
+    text-align: justify;  
+  }
+  
+  #maindiv .version {
+    display: block;
+    width: 100%;
+    background-color: #F1F1F1;
+    text-align: left;
+    text-indent: 30px;
+    font-style: italic;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-bottom: solid 1px #bbb;
+    border-top: solid 1px #bbb;
+  }
+  
+  .version-list {
+    line-height: 150%;
+    font-size: 80%;
+    text-align: left;
+    list-style-type: square;
+  }
+-->
+/*]]>*/
+</style><title>Leeme de The Bigg Quest Pack</title>
+
+
+
+			<!--<script language="javascript" src="SPELLHOLD%20STUDIOS%20-%20readme_files/js.js"></script>--></head>
+
+
+  <body>
+    <a name="top" id="top"></a>
+    <div id="headerdiv-top">
+      The Bigg Quest Pack<br>
+      <span id="headerdiv-top-fw">Un mod de Spellhold Studios</span>
+    </div>
+    <div id="headerdiv-middle">
+      <span class="headerdiv-line">Autor: the bigg</span> | <span class="headerdiv-line"><a href="http://forums.spellholdstudios.net/index.php?showforum=253" target="_blank">Foro</a> (abre una nueva ventana)</span> | <span class="headerdiv-line">Versión: 2.02</span>
+    </div>
+    <div id="headerdiv-bottom">
+      <a href="#intro">Introducción</a> | <a href="#compatibility">Notas de Compatibilidad</a> | <a href="#installation">Instalación</a> | <a href="#components">Componentes</a> | <a href="#faq">FAQ</a> | <a href="#version">Historial</a> | <a href="#credits">Créditos</a> | <a href="#contact">Información de Contacto</a>
+    </div><a name="intro" id="intro"></a>
+    <div id="maindiv">
+
+      <!-- ================== I n t r o d u c t i o n ================== -->
+      <div>
+        <h4>
+          Introducción
+        </h4>
+        <p>
+          Este mod es una colección de pequeños combates independientes (decidí llamar al mod 'Pack de Misiones' [Quest Pack] porque suena mejor que 'Pack de Luchas'[Fight Pack] ó 'Pack de Combates'[Combat Pack]). Todos ellos fueron escritos por mí (con el habitual archivo que cogí de otro mod, como nota obligatoria en la sección 'agradecimientos').
+		 </p>
+        <div class="divimp">
+          <b>Nota: por favor, date cuenta que los componentes 'Mprolla' son de cachondeo,</b>, así que se aconseja el instalarlos, a menos que estes interesado en algo sin sentido o quieras reirte un poco con Mprolla.
+        </div>
+        <address>
+          <span class="address-footer-1">The Bigg Quest Pack &gt; introducción</span>
+            <a href="#top">VOLVER ARRIBA</a>
+        </address>
+      </div>
+
+      <!-- ================== C o m p a t i b i l i t y ================== -->
+      <a name="compatibility" id="compatibility"></a>
+      <div>
+        <h4>
+          Notas de compatibilidad
+        </h4>
+        <p>
+          No hay un orden de instalación específico a seguir, así que instala este mod antes de todos los mods que estan enumerados como necesarios de instalar al final.
+          <br>Además, deberías instalar el componente High Level Revision del mod Refinements (mirad el <a href='http://www.final-exodus.net/~refinements'>sitio web</a> relevante), ya que algunos de estos componentes usan las HLAs de ese mod, y no funcionara sin ellas. No tengo forma de haberlo por tí (ya que Refinements debe ser instalado después de este mod), así que tendrás que tener cuidado por tí mismo.
+		<address>
+          <span class="address-footer-1">The Bigg Quest Pack &gt; Notas de Compatibilidad</span>
+            <a href="#top">VOLVER ARRIBA</a>
+        </address>
+      </div>
+
+      <!-- ================== I n s t a l l a t i o n ================== -->
+      <a name="installation" id="installation"></a>
+      <div>
+        <h4>
+          Instalación
+        </h4>
+        <h5>
+        	Windows
+        </h5>
+        <p>
+          The Bigg Quest Pack se descomprime e instala con WeiDU y es distribuido como un archivo auto ejecutable. Para instalar, simplemente haz doble clic en el archivo y sigues las instrucciones en pantalla.
+		  <br>
+		  <br>Alternativamente, los archivos pueden ser extraidos del archivo usando WinRAR. Si se extrae correctamente, deberías tener la carpeta tb#quest, y el archivo Setup-tb#quest.exe en tu carpeta BG2. Para instalar, simplemente haz doble clic en Setup-tb#quest.exe y sigue las instrucciones en pantalla.
+		  <br>
+		  <br>Por favor, ejecuta de nuevo Setup-tb#quest.exe en tu carpeta BG2 para reinstalar, desinstalar y cambiar de otra forma los componentes.
+		</p>
+
+        <h5>
+         Macintosh
+        </h5>
+        <p>
+		  <i>Si el mod ha sido instalado previamente, desinstalalo antes de extraer la nueva versión. Por favor, date cuenta que es mod es incompatible con Mod Organizer. </i> The Bigg Quest Pack se descomprime e instala con WeiDU. Para instalar, simplemente extrae el contenido del mod dentro de tu carpeta BG2. si se extrae correctamente, deberías tener la carpeta tb#quest y los archivos Setup-tb#quest y Setup-tb#quest.command en tu carpeta BG2. Para instalar, simplemente haz doble clic en Setup-tb#quest.command y sigue las instrucciones en pantalla.
+        </p>
+        <address>
+          <span class="address-footer-1">The Bigg Quest Pack &gt; Instalación</span>
+            <a href="#top">VOLVER ARRIBA</a>
+        </address>
+      </div>
+
+			<!-- ================== C o m p o n e n t s ================== -->
+      <a name="components" id="components"></a>
+      <div>
+        <h4>
+          Componentes
+        </h4>
+        <p>
+          Lista de los componentes actualmente disponibles (cada componente está enlazado a una descripción más completa):
+        </p>
+        <div class="divimp">
+          <ul class="list-numbered">
+            <li><a href="#c0">La Maldición de Mprolla el spammer</a><br>
+            </li>
+            <li><a href="#c1">La Maldición de Mprolla el tramposo</a><br>
+            </li>
+            <li><a href="#c2">Batalla a Gran Escala</a> *<br>
+            </li>
+            <li><a href="#c3">Duelo de Magos en la Infraoscuridad</a><br>
+            </li>
+          </ul><em>* este componente requiere las tablas HLA revisadas de Refinements.</em>
+        </div>
+        </p>
+
+				<a name="c0" id="Mprollas"></a>
+        <h5>
+					La Maldición de Mprolla el spammer
+				</h5>
+        <p>
+        <div class="divimp">
+          <strong>ADVERTENCIA: COMPONENTE DE COÑA
+		  <br>ADVERTENCIA: QUESO
+		  <br>ADVERTENCIA: NO ESTA TRADUCIDO AL ESPAÑOL</strong>
+          <br>Con este componente instalado, puedes encontrarte (y eliminar) a Mprolla, para vengar todos los años de spaming y troleo que ha mantenido en la vida real. Puede ser encontrado en el Paseo de Waukeen, SE de Radeel, x4916 y601. Nota: este componente incluye un hechizo del Refinements (su Canción Jester mejorada).
+		  With this component installed, you can meet (and defeat) Mprolla, to avenge all the years of spamming and trolling he had you sustain in real life. He can be found in the Waukeen's Promenade, SE of Radeel, x4916 y601. Note: this component includes a spell from Refinements (his improved Jester Song).
+        </div>
+        </p>
+
+        <a name="c1" id="Mprollac"></a>
+        <h5>
+					La Maldición de Mprolla el tramposo
+				</h5>
+        <p>
+        <div class="divimp">
+		  <strong>ADVERTENCIA: NO ESTA TRADUCIDO AL ESPAÑOL</strong>
+		  <br>Una versión de peor calidad aún que el componente anterior. (como tál, se muestra solo si has instalado el componente anterior).
+		</div>
+        </p>
+
+        <a name="c2" id="Large_Scale_Battle"></a>
+        <h5>
+					Batalla a Gran Escala
+				</h5>
+        <p>
+        <div class="divimp">
+          Te (con la ayuda de algunos soldados amnianos) infiltrarás en el campamento de un ejército y lo recorreras para matar a los líderes. El campo de batalla contiene ciento veintiseis enemigos (y, por supuesto, generaré una cantidad frenética de soldados extrar para que trocees), la mayoría de ellos orcos, pero hay un buen número de tipos de alto nivel.
+          <br>High Level Abilities (cuando sea posible) son escogidas del conjuto de Refinements; esto quiere decir que Refinements es necesario.
+          <br>También conseguiras un nuevo hechizo y un nuevo objeto (el pergamino te lo enseñará, que es...) por luchar en la batalla.
+          <br>La mini misión se activará cuando tu personaje alcance los 2.500.000 puntos de EXP y estés en el exterior; si quieres intentar luchar antes de este nivel de EXP, puedes hacerlo por medio de la consola: los comandos necesarios son CLUAConsole:CreateCreature("tb#lotr") y CLUAConsole:SetGlobal("tb#spawnedlotr","global",1)
+        </div>
+        </p>
+
+        <a name="c3" id="Underdark_duel"></a>
+        <h5>
+					Duelo de Magos en la Infraoscuridad
+		</h5>
+        <p>
+        <div class="divimp">
+		  En la Ciudad Drow en la Infraoscuridad, te encontrarás con un hechicero drow anónimo cerca de la torre de Deirex (usa el avatar de un elfo); si el mago masculino te habla, podría decir (es al azar) que tiene miedo de que vengais a ocupar su lugar en Sortilegia. Con este componente instalado, siempre tendrás esa línea si quieres hablar con él (su nombre será ahora Laniz) con cualquier mago (puro o multiclase), bardo o hechicero, y te desafiará a un duelo. Puedes aceptar su duelo.
+		  <br>Bien, eso es todo  :)
+		</div>
+        </p>
+        <address>
+          <span class="address-footer-1">The Bigg Quest Pack &gt; Componentes</span>
+          <a href="#top">VOLVER ARRIBA</a>
+        </address>
+      </div>
+
+			<!-- ================== F A Q ================== -->
+      <a name="faq" id="faq"></a>
+      <div>
+        <h4>
+          Preguntas más frecuentes
+        </h4>
+        <p>
+          <span class="faq-q">Q: ¿Cuál es el sentido rolero de Mprolla?</span><br>
+          <span class="faq-a">A: Ninguno (como se detalla en varios sitios).</span><br>
+          <span class="faq-q">Q: ¿Cómo puedo interaccionar con Mprolla?</span><br>
+          <span class="faq-a">A: Deja que hable contigo, y otra vez, y otra... (como harías con Neeber o Noober).</span><br>
+
+
+          <span class="faq-q">Q: ¿Cómo era el Secuenciador de Hechizos del Vigilante Encapuchado?</span><br>
+          <span class="faq-a">A: Pulsa "B" mientras está seleccionada, y se lanzará sobre sí misma Imagen en el Espejo, Piel de Piedra e Invisibilidad Mejorada.</span><br>
+
+          <span class="faq-q">Q: He encontrado un error / incompatibilidad / ¡Tengo una sugerencia!</span><br>
+          <span class="faq-a">A: <a href="#contact">Informanos</a> y lo miraré lo antes posible.</span>
+        </p>
+        <address>
+          <span class="address-footer-1">The Bigg Quest Pack &gt; Preguntas más frecuentes</span>       <a href="#top">VOLVER ARRIBA</a>  
+        </address>
+      </div>
+
+			<!-- ================== Version History ================== -->
+      <a name="version" id="version"></a>
+      <div>
+        <h4>
+          Historial
+        </h4>
+
+        <p class="version">
+          Versión 2.02:
+        </p>
+        <ul class="version-list">
+        	<li>V188 de WeiDU contiene un arreglo de error importante.</li>
+        </ul>
+
+        <p class="version">
+          Versión 2.01:
+        </p>
+        <ul class="version-list">
+        	<li>Leeme arreglado.</li>
+        </ul>
+
+        <p class="version">
+          Versión 2:
+        </p>
+        <ul class="version-list">
+        		  <li>SFX-RAR, setup-tb#quest.exe automático y actualizado, etc.</li>
+				  <li>Añadido Duelo de Magos en la Infraoscuridad.</li>
+				  <li>Leeme estilo SHS.</li>
+				  <li>Probablemente algunas correcciones.</li>
+        </ul>
+
+        <p class="version">
+					Versión 1
+				</p>
+        <ul class="version-list">
+				  Primera versión (con Mprolla y Batalla a Gran Escala).
+        </ul>
+        <address>
+          <span class="address-footer-1">The Bigg Quest Pack &gt; Version History</span>
+                <a href="#top">VOLVER ARRIBA</a>
+        </address>
+      </div>
+
+			<!-- ================== Credits ================== -->
+      <a name="credits" id="credits"></a>
+      <div>
+        <h4>
+          Créditos
+        </h4>
+        <p>
+          Este mod fue realizado por the bigg.
+        </p>
+
+				<h5>Gracias enormes a:</h5>
+
+        <p class="faq-q">
+          La gente que hizo esto posible, por crear unas herramientas de modding sorprendentes:
+        </p>
+        <ul class="version-list">
+					<li>Westley Weimer, por WeiDU y su voluntad de mejorarlo constantemente.</li>
+					<li>Jon Olav Hauglid, por NearInfinity y... como antes :)</li>
+					<li>Gustov Montessi, autor del IEEP</li>
+        </ul>
+        
+        <p class="faq-q">
+          Ayuda de Modding:
+        </p>
+        <ul class="version-list">
+          <li>Sir Darius Miles, A.K.A. Al17, quienes hicieron bastantes pruebas de balanceo y dieron un varias sugerencias al componente Duelo de Magos en la Infraoscuridad.
+        </ul>
+
+        <p class="faq-q">
+          Agradecimientos por temas relacionados con la Web:
+        </p>
+        <ul class="version-list">
+					<li>SConrad, por hospeadar el foro y por alojamiento.</li>
+					<li>¡The Wizard y Baronius por alojamientos adicionales!</li>
+        </ul>
+
+
+        <p class="faq-q">
+          Dedicado a:
+        </p>
+        <ul class="version-list">
+					Este mod está dedicado a la memoria de Luca Poli, un compañero de clase, que se mató a sí mismo el 13 de Febrero del 2004, Viernes.
+        </ul>
+        <address>
+          <span class="address-footer-1">The Bigg Quest Pack &gt; Créditos</span>
+          <a href="#top">VOLVER ARRIBA</a>
+        </address>
+      </div>
+
+      <!-- ================== C O N T A C T   I N F O ================== -->
+      <a name="contact" id="contact"></a>
+      <div>
+        <h4>
+          Información de Contacto:
+        </h4>
+        <p>
+        	Ese bienvenido cualquier tipo de aviso de error, incompatibilidad, sugerencia y críticas constructivas, y lo tomaré muy en cuenta - por favor, dejaros los troleos para vostoros.
+          <br>El métido de contacto que prefiero es vía
+					<a href="http://forums.spellholdstudios.net/index.php?showforum=253" target="_blank">el foro</a>,
+					ya que de esta forma todos los jugadores interesados serán capaces de contribuir con sus ideas.
+					<br>Sin embargo, si prefieres contactar solo conmigo, usa esta dirección de e-mail:</p>
+        	<script type="text/javascript">
+						<!--
+								document.write("<p>");
+								mail("thebigg### fuck@off.spammers ###spellholdstudios.net### you.won.t.get@this.one ###The Bigg");
+								document.write("</p>");
+						-->
+					</script>
+        <p>Si tienes apagado JavaScript y no ves el enlace anterior, tendrás que escribir
+				la dirección a mano (lo siento, la protección contra spammaers es una
+				necesidad ahora):</p>
+          <p>spellholdstudios.net después del símbolo normal, thebigg antes del mismo.</p>
+        </ul>
+        <address>
+          <span class="address-footer-1">The Bigg Quest Pack &gt; Información de Contacto</span>
+					<a href="#top">VOLVER ARRIBA</a>
+        </address>
+      </div>
+
+    </div>
+  <!--<script language="javascript">postamble();</script>-->
+</body></html>

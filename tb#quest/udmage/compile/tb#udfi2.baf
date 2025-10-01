@@ -1,0 +1,30 @@
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	!StateCheck(Myself,STATE_INVISIBLE)
+	HaveSpellRES("tb#udweb") // Web
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellRES("tb#udweb",Myself) // Web
+END
+
+IF
+	!GlobalTimerNotExpired("cast","locals")
+	!StateCheck(Myself,STATE_INVISIBLE)
+	HaveSpellRES("tb#udpoi") // Poison
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("cast","locals",6)
+		SpellRES("tb#udpoi",NearestEnemyOf(Myself)) // Poison
+END
+
+IF
+	ActionListEmpty()
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		AttackOneRound(LastSeenBy(Myself))
+END
+
+

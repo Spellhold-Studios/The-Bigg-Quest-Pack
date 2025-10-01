@@ -1,0 +1,376 @@
+//7 7 7 6 4 3 1 Cleric 16th
+//5 5 5 4 4 2 1 Mage 14th
+//
+// Feats: Divine Shell, ? (won't anyway show up 'coz all spell slots are closed)
+//
+// Sanctuary (3), Armor of Faith, Remove Fear, Absolute garbage
+// DUHM, Absolute Garbage
+// Unholy Blight (5) (3 in sequencer), Animate Dead (2)
+// Defensive Harmony, Clck of fear (2), Mental Domination (2), Absolute Garbage
+// FlameStrike (3), True Sight
+// Heal (2), Conjure Aerial Servant
+// Divine Shell
+//
+// Magic Missile (5)
+// Mirror Images, Blur, Strenght, Melf Acid Arrow (2)
+// Invisibility 10' Radius, Flame Arrow (2), Slow (2)
+// Stoneskin (3), Fireshield:Blue
+// Shadow Door, Chaos, Phantom Blade, SI:abjur
+// Gorbog's Transformation (like Tensor but can cast spell & weaker), Improved Haste
+// Spell Sequencer (= 3 unhol blights)
+
+//note: I do not use any type of magic resistance, saves or spell defence check.
+//
+//cause 1: lazyness.
+//cause 2: AI cycles.
+//cause 3: Orcs aren't exactly smart, anyway.
+
+IF
+  GlobalTimerExpired("tb#lotrrouted","global")
+THEN
+    RESPONSE #100
+    	     Kill(Myself)
+END
+
+IF
+  Global("active","locals",0)
+  OR(4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+       Detect(NearestEnemyOf(Myself))
+       Global("tb#lotrgenactive","global",1)
+THEN
+    RESPONSE #100
+    	     SetGlobal("active","locals",1)
+    	     DisplayStringHead(Myself,@19)
+	     SetGlobal("sanct","locals",3)
+	     SetGlobal("unh_bli","locals",2)
+	     SetGlobal("ani_dead","locals",2)
+	     SetGlobal("clck_fer","locals",2)
+	     SetGlobal("dominion","locals",2)
+	     SetGlobal("flame_s","locals",3)
+	     SetGlobal("truesight","locals",1)
+	     SetGlobal("heal","locals",2)
+	     SetGlobal("mag_mis","locals",5)
+	     SetGlobal("m_a_a","locals",2)
+	     SetGlobal("invi_ten","locals",1)
+	     SetGlobal("flame_a","locals",2)
+	     SetGlobal("slow","locals",2)
+	     SetGlobal("ssk","locals",2)
+	     SetGlobal("sdoor","locals",1)
+	     SetGlobal("chaos","locals",1)
+    	     ApplySpell(Myself,CLERIC_ARMOR_OF_FAITH)
+    	     ApplySpell(Myself,CLERIC_REMOVE_FEAR)
+    	     ApplySpell(Myself,CLERIC_DRAW_UPON_HOLY_MIGHT)
+    	     ApplySpell(Myself,CLERIC_DEFENSIVE_HARMONY)
+    	     ApplySpell(Myself,CLERIC_AERIAL_SERVANT)
+    	     ApplySpellRES("tg#divn",Myself)  //Divine Shell
+    	     ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
+    	     ApplySpell(Myself,WIZARD_BLUR)
+    	     ApplySpell(Myself,WIZARD_STRENGTH)
+    	     ApplySpell(Myself,WIZARD_STONE_SKIN)
+    	     ApplySpell(Myself,WIZARD_FIRE_SHIELD_BLUE)
+    	     ApplySpell(Myself,WIZARD_PHANTOM_BLADE)
+    	     ApplySpell(Myself,WIZARD_SPELL_IMMUNITY_ABJURATION)
+      	     ApplySpell(Myself,WIZARD_IMPROVED_HASTE)
+    	     ApplySpellRES("tb#lotr1",Myself)  //Gobrog's Transformation
+    	     Wait(2)
+    	     DisplayString(Myself,@20)
+    	     ReallyForceSpell(Nearest([GOODCUTOFF.0.0.0.0.0.MASK_GOOD]),CLERIC_UNHOLY_BLIGHT)
+    	     ReallyForceSpell(Nearest([GOODCUTOFF.0.0.0.0.0.MASK_GOOD]),CLERIC_UNHOLY_BLIGHT)
+    	     ReallyForceSpell(Nearest([GOODCUTOFF.0.0.0.0.0.MASK_GOOD]),CLERIC_UNHOLY_BLIGHT)
+END
+
+
+IF
+  Global("active","Locals",0)
+THEN
+    RESPONSE #100
+    	     NoAction()
+END
+
+IF
+  Die()
+THEN
+    RESPONSE #100
+    	     IncrementGlobal("tb#lotrkilled","global",1)
+END
+
+IF
+  Global("tb#lotrgenactive","global",1)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject("tb#lotrg")
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  HPPercentLT(Myself,25)
+  GlobalGT("heal","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",12)
+    	     SpellNoDec(Myself,CLERIC_SANCTUARY)
+    	     SpellNoDec(Myself,CLERIC_HEAL)
+    	     IncrementGlobal("heal","Locals",-1)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Heard([EVILCUTOFF],6)
+  GlobalGT("heal","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",12)
+    	     SpellNoDec(Myself,CLERIC_SANCTUARY)
+    	     SpellNoDec(LastHeardBy,CLERIC_HEAL)
+    	     SetGlobal("tb#lotrgivepotion","global",0)
+    	     IncrementGlobal("heal","Locals",-1)
+END
+
+IF
+  HPPercentLT(Myself,25)
+  HasItem("potn52",Myself)
+  !GlobalTimerNotExpired("cast","locals")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     UseItem("potn52",Myself)
+    	     Continue()
+END
+
+IF
+  HPPercentLT(Myself,25)
+  !HasItem("Potn52",Myself)
+  !GlobalTimerNotExpired("shouted1","locals")
+THEN
+    RESPONSE #100
+    	     Shout(4)
+    	     SetGlobal("tb#lotrgivepotion","global",1)
+    	     DisplayStringHead(Myself,@18)
+    	     SetGlobalTimer("shouted1","locals",12)
+    	     Continue()
+END
+
+
+IF
+  OR(2)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],6)
+  Global("tb#lotrgivepotion","global",1)
+  HasItem("potn52",Myself)
+  HPPercentGT(Myself,35)
+THEN
+    RESPONSE #100
+    	     SetGlobal("tb#lotrgivePotion","global",0)
+	     DisplayStringHead(Myself,@8)
+    	     GiveItem("potn52",LastHeardBy(Myself))
+    	     Continue()
+END
+
+
+IF
+  HPPercentLT(Myself,50)
+  HPPercentGT(Myself,25)
+  !GlobalTimerNotExpired("shouted","locals")
+THEN
+    RESPONSE #100
+    	     Shout(3)
+	     DisplayStringHead(Myself,@15)
+    	     SetGlobalTimer("shouted","locals",12)
+    	     Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  Detect([GOODCUTOFF])
+  !See([GOODCUTOFF])
+  Global("truesight","locals",1)
+  !GlobalTimerNotExpired("tb#lotrindiv_invis","global")
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("tb#lotrindiv_invs","global",60)
+    	     SpellNoDec(Myself,CLERIC_TRUE_SIGHT)
+    	     SetGlobal("truesight","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  !GlobalTimerNotExpired("summon","locals") //denotes also other special moves
+  GlobalGT("sdoor","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("summon","locals",12)
+    	     SpellNoDec(Myself,WIZARD_SHADOW_DOOR)
+    	     IncrementGlobal("sdoor","locals",-1)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  !GlobalTimerNotExpired("summon","locals")
+  GlobalGT("invi_ten","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("summon","locals",24)
+    	     SpellNoDec(Myself,WIZARD_INVISIBILITY_10_FOOT)
+    	     IncrementGlobal("invi_ten","locals",-1)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  !GlobalTimerNotExpired("summon","locals")
+  GlobalGT("ani_dead","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     SetGlobalTimer("summon","locals",24)
+    	     SpellNoDec(Myself,CLERIC_ANIMATE_DEAD)
+    	     IncrementGlobal("ani_dead","locals",-1)
+END
+
+IF
+  OR(4)
+       Heard([EVILCUTOFF],3)
+       Heard([EVILCUTOFF],4)
+       Heard([EVILCUTOFF],5)
+       Heard([EVILCUTOFF],6)
+  !See([PC])
+THEN
+    RESPONSE #100
+    	     MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+  Range(LastAttackerOf(Myself),4)
+THEN
+    RESPONSE #50
+    	     RunAwayFrom(LastSeenBy(Myself),30)
+END
+
+IF
+  OR(3)
+      See(NearestEnemyOfType([GOODCUTOFF]))
+      See(NearestEnemyOfType([PC]))
+      See(LastAttackerOf(Myself))
+  !Range(LastSeenBy(Myself),4)
+THEN
+    RESPONSE #100
+    	     Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("chaos","locals",0)
+  Global("spelkind","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("chaos","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_CHAOS)
+    	     SetGlobal("spelkind","locals",1)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("flame_s","locals",0)
+  Global("spelkind","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("flame_s","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),CLERIC_FLAME_STRIKE)
+    	     SetGlobal("spelkind","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("flame_a","locals",0)
+  Global("spelkind","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("flame_a","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    	     SetGlobal("spelkind","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("m_a_a","locals",0)
+  Global("spelkind","locals",1)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("m_a_a","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+    	     SetGlobal("spelkind","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("dominion","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("dominion","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),CLERIC_MENTAL_DOMINATION)
+    	     SetGlobal("spelkind","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("mag_mis","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("Mag_mis","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    	     SetGlobal("spelkind","locals",0)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("unh_bli","locals",0)
+  Alignment(LastSeenBy,MASK_GOOD)
+  Global("spelkind","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("unh_bli","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),CLERIC_UNHOLY_BLIGHT)
+    	     SetGlobal("spelkind","locals",1)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("slow","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("slow","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),WIZARD_SLOW)
+    	     SetGlobal("spelkind","locals",1)
+END
+
+IF
+  !GlobalTimerNotExpired("cast","locals")
+  GlobalGT("clck_fer","locals",0)
+THEN
+    RESPONSE #100
+    	     SetGlobalTimer("cast","locals",6)
+    	     IncrementGlobal("clck_fer","locals",-1)
+    	     SpellNoDec(LastSeenBy(Myself),CLERIC_CLOAK_OF_FEAR)
+    	     SetGlobal("spelkind","locals",1)
+END
+
+IF
+  ActionListEmpty()
+THEN
+    RESPONSE #100
+    	     AttackOneRound(LastSeenBy)
+END
+

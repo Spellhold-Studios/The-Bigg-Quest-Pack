@@ -1,0 +1,56 @@
+@60      = ~Parece que ya tienes este componente instalado, saltandose...~
+
+// Note to translators: ignore from here...
+@1600    = ~The curse of Mprolla the spammer~
+@1601    = ~Mike Prolla~
+@1602    = ~Royalty We~
+@1700    = ~The curse of Mprolla the cheater~
+@1701    = ~You need The curse of Mprolla the Spammer~
+@1702	 = ~The Curse of Mprolla is present, good!~
+// ... Until here
+// The above component makes no sense if you don't know Mprilla, which requires you to know English  :)
+
+@2000    = ~Una gran batalla~
+@2002    = ~Maniar~
+@2003    = ~Inquilino ogro~
+@2004    = ~Ered el Mago Loco~
+@2005    = ~Arker, Shaman inquilino~
+@2006    = ~Inquilino orco~
+@2007    = ~General Argor~
+@2008    = ~Teniente Beldor~
+@2009    = ~Mago chamánico Gobrog~
+@2010   = ~Transformación de Gobrog~
+@2011   = ~Transformación de Gobrog
+
+Gobrog, un orco clérigo/mago sin dudas excepcionalmente inteligente, fué capaz de desarollar su propia versión del más famoso de los hechizos de Tenser. Es ligeramente más débil, pero permite al lanzador el lanzar hechizos.
+
+DIFERENCIAS:
+No se recibe la bonificación de 2 al GAC0. Sin embargo, el GAC0 sigue siendo el del nivel de un luchador.
+Los PG solo obtienen una bonificación del 150%, en vez del 200%.
+Puede lanzar hechizos mientras el hechizo esté funcionado, pero con algunos inconvenientes.
+La probabilidad de fallo en el lanzamiento de hechizos es aumentada en un 15%, el tiempo de lanzamiento es aumentado en 2, y, finalmente, perderás un hechizo memorizado.
+
+EFECTOS NETOS:
+La transformación de Gorbog es un espectáculo que garantiza sobrecoger a cualquier criatura que no sea consciente de su poder. Cuando el hechicero lanza el hechizo, sufre una sorprendente transformación. El tamaño y la fuerza del mago se incrementan en proporciones heróicas, de forma que se convierte en una formidable máquina de combate. El hechizo provoca que el lanzador se vuelva un luchador berserker.
+
+Los puntos de golpe del mago se incrementan a un 150% de su valor actual, y todo el daño que sufra se hará primero a los puntos mágicos ganados. La clase de armadura del mago es 4 puntos mejor que la que poseía antes de lanzar el hechizo. Todos los ataques son como de un luchador del mismo nivel que el hechicero (es decir, el mago usa los valores de combate normalmente reservados para los luchadores). Además, cada golpe en combate con éxito inflige 2 puntos de daño adicionales. El efecto dura mientras dure el hechizo o hasta que sea disipado con éxito. NOTA: Este hechizo no le da al lanzador ningún ataque extra.
+Se pueden lanzar hechizos mientras el hechizo está funcionando, con algunos ligeros inconvenientes.
+La probabilidad de fallo en el lanzamiento de hechizos es aumentada en un 15%, el tiempo de lanzamiento es aumentado en 2, y, finalmente, perderás un hechizo memorizado.~
+
+@3000 = ~Duelo de Magos en la Infraoscuridad~
+@3001 = ~Kix~
+@3002 = ~Thix~
+@3003 = ~Laniz~
+@3004 = ~Estatuilla de Araña~
+@3005 = ~Esta estatuilla de obsidiana representa a una araña negra; has visto al Mago Drow anónimo que has desafiado usarla para convocar a un par de arañas mutantes, pero no puedes imiginar cómo replicar el efecto.~
+@3006 = ~Esta estatuilla de obsidiana representa a una araña negra; has visto a Laniz usarla para convocar a un par de arañas mutantes con habilidades especiales. Para usarla, simplemente arrojala al suelo diciendo la palabra de mando. La estatuilla convocará a las arañas mutantes, Kix y Thix. Las arañas obedecerán sus palabras de mando mientras dure el hechizo o hasta que sean destruidas. Después de 30 segundos, independientemente de que las arañas estén vivas o muertas, la estatuilla volverá. Es necesario un día para recargar la estatuilla.
+
+CARACTERISTICAS
+
+Habilidades especiales: Convoca a Kix y Thix durante cinco minutos, una vez al día. Kix puede lanzar Invisibilidad cada dos asaltos y apuñalar por la espalda como un ladrón de nivel 5, mientras que Thix puede lanzar Veneno cada dos asaltos y Telaraña cada diez (lo mismo que la duración del hechizo).
+No permitido a:
+ 
+
+Summons Kix and Thix for five minutes, once each day. Kix can cast Invisibility every two rounds and backstab like a level 5 thief, while Thix can cast Poison every two rounds and Web every ten (= the spell duration).
+Not Usable By:
+ Exterminador de Magos~
